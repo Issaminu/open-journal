@@ -1,11 +1,14 @@
 import prisma from "prisma/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(_req: NextRequest, params: { categoryId: number }) {
-  const categoryId = params.categoryId;
+export async function GET(
+  _req: NextRequest,
+  context: { params: { categoryId: string } }
+) {
+  const categoryId = context.params.categoryId;
   const category = await prisma.category
     .findUnique({
-      where: { id: categoryId },
+      where: { id: parseInt(categoryId) },
     })
     .catch((err) => {
       console.error(err);
@@ -19,12 +22,12 @@ export async function GET(_req: NextRequest, params: { categoryId: number }) {
 
 export async function DELETE(
   _req: NextRequest,
-  params: { categoryId: number }
+  context: { params: { categoryId: string } }
 ) {
-  const categoryId = params.categoryId;
+  const categoryId = context.params.categoryId;
   await prisma.category
     .delete({
-      where: { id: categoryId },
+      where: { id: parseInt(categoryId) },
     })
     .catch((err) => {
       console.error(err);

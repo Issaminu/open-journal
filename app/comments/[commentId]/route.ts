@@ -1,11 +1,14 @@
 import prisma from "prisma/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(_req: NextRequest, params: { commentId: number }) {
-  const categoryId = params.commentId;
+export async function GET(
+  _req: NextRequest,
+  context: { params: { commentId: string } }
+) {
+  const categoryId = context.params.commentId;
   const comment = await prisma.comment
     .findUnique({
-      where: { id: categoryId },
+      where: { id: parseInt(categoryId) },
     })
     .catch((err) => {
       console.error(err);
@@ -17,11 +20,14 @@ export async function GET(_req: NextRequest, params: { commentId: number }) {
   return NextResponse.json(comment, { status: 200 });
 }
 
-export async function DELETE(_req: NextRequest, params: { commentId: number }) {
-  const commentId = params.commentId;
+export async function DELETE(
+  _req: NextRequest,
+  context: { params: { commentId: string } }
+) {
+  const commentId = context.params.commentId;
   await prisma.comment
     .delete({
-      where: { id: commentId },
+      where: { id: parseInt(commentId) },
     })
     .catch((err) => {
       console.error(err);

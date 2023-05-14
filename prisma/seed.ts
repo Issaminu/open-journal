@@ -1,3 +1,4 @@
+const { bcrypt } = require("@bcrypt");
 const { PrismaClient } = require("@prisma/client");
 const { fakerEN_US } = require("@faker-js/faker");
 
@@ -83,12 +84,15 @@ async function main() {
 main();
 
 function generateFakeUsers(count: number) {
-  return [...Array(count)].map(() => ({
-    name: faker.person.fullName(),
-    email: faker.internet.email(),
-    password: faker.internet.password(),
-    role: Role.AUTHOR,
-  }));
+  return [...Array(count)].map(() => {
+    const password = bcrypt.hash(faker.internet.password(), 10);
+    return {
+      name: faker.person.fullName(),
+      email: faker.internet.email(),
+      password,
+      role: Role.AUTHOR,
+    };
+  });
 }
 
 function generateFakeArticles(
