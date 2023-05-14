@@ -7,7 +7,7 @@ export async function GET(
 ) {
   const userId = context.params.userId;
   const user = await prisma.user
-    .findUnique({
+    .findUniqueOrThrow({
       where: { id: parseInt(userId) },
     })
     .catch((err) => {

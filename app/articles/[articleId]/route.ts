@@ -7,7 +7,7 @@ export async function GET(
 ) {
   const articleId = context.params.articleId;
   const article = await prisma.article
-    .findUnique({
+    .findUniqueOrThrow({
       where: { id: parseInt(articleId) },
     })
     .catch((err) => {

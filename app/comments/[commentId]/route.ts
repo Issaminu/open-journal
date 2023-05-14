@@ -7,7 +7,7 @@ export async function GET(
 ) {
   const categoryId = context.params.commentId;
   const comment = await prisma.comment
-    .findUnique({
+    .findUniqueOrThrow({
       where: { id: parseInt(categoryId) },
     })
     .catch((err) => {
