@@ -1,14 +1,16 @@
 import prisma from "prisma/prisma";
 import bcrypt from "bcrypt";
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { validateUser } from "@/lib/utils";
 
 const regexName = /^[a-zA-Z][a-zA-Z ]*$/;
 const regexEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
-export async function POST(req: {
-  body: { name: string; email: string; password: string };
-}) {
+export async function POST(
+  req: NextRequest & {
+    body: { name: string; email: string; password: string };
+  }
+) {
   try {
     const { name, email, password } = req.body;
     const { valid, message } = validateUser(name, email, password);

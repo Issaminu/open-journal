@@ -20,9 +20,11 @@ export async function GET(req: NextRequest) {
   return NextResponse.json({ users }, { status: 200 });
 }
 
-export async function POST(req: {
-  body: { name: string; email: string; password: string };
-}) {
+export async function POST(
+  req: NextRequest & {
+    body: { name: string; email: string; password: string };
+  }
+) {
   const { name, email, password } = req.body;
   const { valid, message } = validateUser(name, email, password);
   if (!valid) return NextResponse.json({ message }, { status: 400 });
