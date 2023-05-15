@@ -46,21 +46,19 @@ export async function PATCH(
   const { articleId, title, content, image } = req.body;
   const tempStockImage =
     "https://static8.depositphotos.com/1423699/902/i/450/depositphotos_9022196-stock-photo-newspaper.jpg";
-  const article = await prisma.article
-    .update({
-      where: { id: req.body.articleId },
-      data: {
-        title,
-        content,
-        image: tempStockImage,
-      },
-    })
-    .catch((err) => {
-      console.error(err);
-      return NextResponse.json(
-        { message: `Article ${articleId} does not exist` },
-        { status: 404 }
-      );
-    });
+  const article = await prisma.article.update({
+    where: { id: req.body.articleId },
+    data: {
+      title,
+      content,
+      image: tempStockImage,
+    },
+  });
+  if (!article) {
+    return NextResponse.json(
+      { message: `Article ${articleId} does not exist` },
+      { status: 404 }
+    );
+  }
   return NextResponse.json({ article }, { status: 201 });
 }

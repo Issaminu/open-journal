@@ -29,21 +29,19 @@ export async function POST(
   const { valid, message } = validateUser(name, email, password);
   if (!valid) return NextResponse.json({ message }, { status: 400 });
   const hashedPassword = await bcrypt.hash(password, 10);
-  const user = await prisma.user
-    .create({
-      data: {
-        name: name,
-        email: email,
-        password: hashedPassword,
-      },
-    })
-    .catch((err) => {
-      console.error(err);
-      return NextResponse.json(
-        { message: "This email is already in use" },
-        { status: 400 }
-      );
-    });
+  const user = await prisma.user.create({
+    data: {
+      name: name,
+      email: email,
+      password: hashedPassword,
+    },
+  });
+  if (!user) {
+    return NextResponse.json(
+      { message: "This email is already in use" },
+      { status: 400 }
+    );
+  }
   return NextResponse.json({ user }, { status: 201 });
 }
 
@@ -54,17 +52,15 @@ export async function PATCH(
   const { valid, message } = validateUser(name, email, password);
   if (!valid) return NextResponse.json({ message }, { status: 400 });
   const hashedPassword = await bcrypt.hash(password, 10);
-  const user = await prisma.user
-    .update({
-      where: { id: 0 },
-      data: { email, name, password: hashedPassword },
-    })
-    .catch((err) => {
-      console.error(err);
-      return NextResponse.json(
-        { message: "User does not exist" },
-        { status: 404 }
-      );
-    });
+  const user = await prisma.user.update({
+    where: { id: 0 },
+    data: { email, name, password: hashedPassword },
+  });
+  if (!user) {
+    return NextResponse.json(
+      { message: "User does not exist" },
+      { status: 404 }
+    );
+  }
   return NextResponse.json({ user }, { status: 201 });
 }

@@ -6,17 +6,14 @@ export async function GET(
   context: { params: { categoryId: string } }
 ) {
   const categoryId = context.params.categoryId;
-  const category = await prisma.category
-    .findUniqueOrThrow({
-      where: { id: parseInt(categoryId) },
-    })
-    .catch((err) => {
-      console.error(err);
-      return NextResponse.json(
-        { message: "Category does not exist" },
-        { status: 404 }
-      );
-    });
+  const category = await prisma.category.findUnique({
+    where: { id: parseInt(categoryId) },
+  });
+  if (!category)
+    return NextResponse.json(
+      { message: `Category ${categoryId} does not exist` },
+      { status: 404 }
+    );
   return NextResponse.json(category, { status: 200 });
 }
 
@@ -25,17 +22,15 @@ export async function DELETE(
   context: { params: { categoryId: string } }
 ) {
   const categoryId = context.params.categoryId;
-  await prisma.category
-    .delete({
-      where: { id: parseInt(categoryId) },
-    })
-    .catch((err) => {
-      console.error(err);
-      return NextResponse.json(
-        { message: `Category ${categoryId} does not exist` },
-        { status: 404 }
-      );
-    });
+  const deletedCategory = await prisma.category.delete({
+    where: { id: parseInt(categoryId) },
+  });
+  if (!deletedCategory) {
+    return NextResponse.json(
+      { message: `Category ${categoryId} does not exist` },
+      { status: 404 }
+    );
+  }
   return NextResponse.json(
     { message: "Category deleted successfully" },
     { status: 200 }

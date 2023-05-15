@@ -6,17 +6,15 @@ export async function GET(
   context: { params: { articleId: string } }
 ) {
   const articleId = context.params.articleId;
-  const article = await prisma.article
-    .findUniqueOrThrow({
-      where: { id: parseInt(articleId) },
-    })
-    .catch((err) => {
-      console.error(err);
-      return NextResponse.json(
-        { message: `Article ${articleId} does not exist` },
-        { status: 404 }
-      );
-    });
+  const article = await prisma.article.findUnique({
+    where: { id: parseInt(articleId) },
+  });
+  if (!article) {
+    return NextResponse.json(
+      { message: `Article ${articleId} does not exist` },
+      { status: 404 }
+    );
+  }
   return NextResponse.json(article, { status: 200 });
 }
 
@@ -25,17 +23,15 @@ export async function DELETE(
   context: { params: { articleId: string } }
 ) {
   const articleId = context.params.articleId;
-  await prisma.article
-    .delete({
-      where: { id: parseInt(articleId) },
-    })
-    .catch((err) => {
-      console.error(err);
-      return NextResponse.json(
-        { message: `Article ${articleId} does not exist` },
-        { status: 404 }
-      );
-    });
+  const deletedArticle = await prisma.article.delete({
+    where: { id: parseInt(articleId) },
+  });
+  if (!deletedArticle) {
+    return NextResponse.json(
+      { message: `Article ${articleId} does not exist` },
+      { status: 404 }
+    );
+  }
   return NextResponse.json(
     { message: "Article deleted successfully" },
     { status: 200 }

@@ -36,19 +36,17 @@ export async function PATCH(
   req: NextRequest & { body: { articleId: number; content: string } }
 ) {
   const { articleId, content } = req.body;
-  const comment = await prisma.comment
-    .update({
-      where: { id: articleId },
-      data: {
-        content,
-      },
-    })
-    .catch((err) => {
-      console.error(err);
-      return NextResponse.json(
-        { message: "Comment does not exist" },
-        { status: 404 }
-      );
-    });
+  const comment = await prisma.comment.update({
+    where: { id: articleId },
+    data: {
+      content,
+    },
+  });
+  if (!comment) {
+    return NextResponse.json(
+      { message: `Comment ${articleId} does not exist` },
+      { status: 404 }
+    );
+  }
   return NextResponse.json({ comment }, { status: 201 });
 }

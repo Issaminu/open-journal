@@ -52,17 +52,15 @@ export async function PATCH(
       { status: 400 }
     );
   }
-  const category = await prisma.category
-    .update({
-      where: { id: articleId },
-      data: { name },
-    })
-    .catch((err) => {
-      console.error(err);
-      return NextResponse.json(
-        { message: "Category does not exist" },
-        { status: 404 }
-      );
-    });
+  const category = await prisma.category.update({
+    where: { id: articleId },
+    data: { name },
+  });
+  if (!category) {
+    return NextResponse.json(
+      { message: `Category ${articleId} does not exist` },
+      { status: 404 }
+    );
+  }
   return NextResponse.json({ category }, { status: 201 });
 }

@@ -16,22 +16,17 @@ const authOptions: NextAuthOptions = {
       },
       async authorize(credentials, _req) {
         if (!credentials) return null;
-        const user = await prisma.user
-          .findUniqueOrThrow({
-            where: {
-              email: credentials.email,
-            },
-            select: {
-              id: true,
-              email: true,
-              name: true,
-              password: true,
-            },
-          })
-          .catch((err) => {
-            console.error(err);
-            return null;
-          });
+        const user = await prisma.user.findUnique({
+          where: {
+            email: credentials.email,
+          },
+          select: {
+            id: true,
+            email: true,
+            name: true,
+            password: true,
+          },
+        });
         if (!user) return null;
         const isMatch = await bcrypt.compare(
           credentials.password,
