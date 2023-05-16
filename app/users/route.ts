@@ -59,18 +59,16 @@ export async function PATCH(req: NextRequest) {
     const validatedBody = userSchemaUpdate.parse(req.body);
     const { email, name, password } = validatedBody;
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await prisma.user.update({
-      where: {
-        id: 0, //temp value
-      },
-      data: { email, name, password: hashedPassword },
-    });
-    if (!user) {
-      return NextResponse.json(
-        { message: "User does not exist" },
-        { status: 404 }
-      );
-    }
+    const user = await prisma.user
+      .update({
+        where: {
+          id: 0, //temp value
+        },
+        data: { email, name, password: hashedPassword },
+      })
+      .catch((error) => {
+        throw CustomError(error, 400);
+      });
     return NextResponse.json({ user }, { status: 201 });
   } catch (error) {
     if (error instanceof ZodError) {
