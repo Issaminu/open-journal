@@ -20,7 +20,11 @@ export const articleSchemaDelete = articleSchema.omit({
 });
 
 export const userSchema = z.object({
-  name: z.string().min(1).max(100),
+  name: z
+    .string()
+    .regex(/^[a-zA-Z][a-zA-Z ]*$/)
+    .min(1)
+    .max(100),
   email: z.string().email(),
   password: z.string().min(8).max(100),
   id: z.number().int().positive(),

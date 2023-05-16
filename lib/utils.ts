@@ -5,6 +5,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+// Depreciated in favor of userSchema parsing in lib/zod.ts
 export function validateUser(name: string, email: string, password: string) {
   const regexName = /^[a-zA-Z][a-zA-Z ]*$/;
   const regexEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
