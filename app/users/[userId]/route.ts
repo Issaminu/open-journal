@@ -4,10 +4,10 @@ import { CustomError, isCustomError } from "@/lib/utils";
 
 export async function GET(
   _req: NextRequest,
-  context: { params: { slug: string } }
+  context: { params: { userId: string } }
 ) {
   try {
-    const userId = context.params.slug;
+    const userId = context.params.userId;
     const user = await prisma.user.findUnique({
       where: { id: parseInt(userId) },
     });
@@ -28,10 +28,10 @@ export async function GET(
 
 export async function DELETE(
   _req: NextRequest,
-  context: { params: { slug: string } }
+  context: { params: { userId: string } }
 ) {
   try {
-    const userId = context.params.slug;
+    const userId = context.params.userId;
     const deletedUser = await prisma.user.delete({
       where: { id: parseInt(userId) },
     });
