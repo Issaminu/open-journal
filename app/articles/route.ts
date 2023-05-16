@@ -1,5 +1,7 @@
+import { articleSchemaUpdate } from "@/lib/zod";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "prisma/prisma";
+import { ZodError } from "zod";
 
 export async function GET(req: NextRequest) {
   try {
@@ -15,20 +17,17 @@ export async function GET(req: NextRequest) {
       where: { id: { gte: skip } },
       take: take,
     });
-    console.log(articles);
     return NextResponse.json({ articles }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: error }, { status: 500 });
   }
 }
 
-export async function POST(
-  req: NextRequest & {
-    body: { title: string; content: string; image: File };
-  }
-) {
+export async function POST(req: NextRequest) {
   try {
-    const { title, content } = req.body;
+    const validatedBody = articleSchemaUpdate.parse(req.body);
+
+    const { title, content } = validatedBody;
     const tempStockImage =
       "https://static8.depositphotos.com/1423699/902/i/450/depositphotos_9022196-stock-photo-newspaper.jpg";
     const article = await prisma.article.create({
@@ -42,31 +41,40 @@ export async function POST(
     });
     return NextResponse.json({ article }, { status: 201 });
   } catch (error) {
+    if (error instanceof ZodError) {
+      return NextResponse.json({ message: error.message }, { status: 400 });
+    }
     return NextResponse.json({ message: error }, { status: 500 });
   }
 }
 
-export async function PATCH(
-  req: NextRequest & {
-    body: { articleId: number; title: string; content: string; image: File };
+export async function PATCH(req: NextRequest) {
+  try {
+    const validatedBody = articleSchemaUpdate.safeParse(req.body);
+    if (!validatedBody.success) {
+      return NextResponse.json(
+        { message: validatedBody.error },
+        { status: 400 }
+      );
+    }
+    const { id, title, content } = validatedBody.data; //TODO: Add image support
+    const tempStockImage =
+      "https://static8.depositphotos.com/1423699/902/i/450/depositphotos_9022196-stock-photo-newspaper.jpg";
+    const article = await prisma.article.update({
+      where: { id },
+      data: {
+        title,
+        content,
+        image: tempStockImage,
+      },
+    });
+    if (!article) throw Error(`Article ${id} does not exist`);
+
+    return NextResponse.json({ article }, { status: 201 });
+  } catch (error) {
+    if (error instanceof ZodError) {
+      return NextResponse.json({ message: error.message }, { status: 400 });
+    }
+    return NextResponse.json({ message: error }, { status: 500 });
   }
-) {
-  const { articleId, title, content, image } = req.body;
-  const tempStockImage =
-    "https://static8.depositphotos.com/1423699/902/i/450/depositphotos_9022196-stock-photo-newspaper.jpg";
-  const article = await prisma.article.update({
-    where: { id: req.body.articleId },
-    data: {
-      title,
-      content,
-      image: tempStockImage,
-    },
-  });
-  if (!article) {
-    return NextResponse.json(
-      { message: `Article ${articleId} does not exist` },
-      { status: 404 }
-    );
-  }
-  return NextResponse.json({ article }, { status: 201 });
 }

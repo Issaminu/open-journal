@@ -1,5 +1,8 @@
+import { CustomError, isCustomError } from "@/lib/utils";
+import { commentSchemaCreate, commentSchemaUpdate } from "@/lib/zod";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "prisma/prisma";
+import { ZodError } from "zod";
 
 export async function GET(req: NextRequest) {
   try {
@@ -15,18 +18,16 @@ export async function GET(req: NextRequest) {
       where: { id: { gte: skip } },
       take: take,
     });
-    console.log(comments);
     return NextResponse.json({ comments }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ message: error }, { status: 500 });
   }
 }
 
-export async function POST(
-  req: NextRequest & { body: { articleId: number; content: string } }
-) {
+export async function POST(req: NextRequest) {
   try {
-    const { articleId, content } = req.body;
+    const validatedBody = commentSchemaCreate.parse(req.body);
+    const { articleId, content } = validatedBody;
     const comment = await prisma.comment.create({
       data: {
         content,
@@ -34,31 +35,46 @@ export async function POST(
         authorId: 0, //temp value
       },
     });
+    if (!comment) {
+      throw CustomError(`The article "${articleId}" doesn't exist`, 400);
+    }
     return NextResponse.json({ comment }, { status: 201 });
   } catch (error) {
+    if (error instanceof ZodError) {
+      return NextResponse.json({ message: error.message }, { status: 400 });
+    }
+    if (isCustomError(error)) {
+      return NextResponse.json(
+        { message: error.message },
+        { status: error.status }
+      );
+    }
     return NextResponse.json({ message: error }, { status: 500 });
   }
 }
 
-export async function PATCH(
-  req: NextRequest & { body: { articleId: number; content: string } }
-) {
+export async function PATCH(req: NextRequest) {
   try {
-    const { articleId, content } = req.body;
+    const validatedBody = commentSchemaUpdate.parse(req.body);
+    const { id, content } = validatedBody;
     const comment = await prisma.comment.update({
-      where: { id: articleId },
-      data: {
-        content,
-      },
+      where: { id },
+      data: { content },
     });
     if (!comment) {
-      return NextResponse.json(
-        { message: `Comment ${articleId} does not exist` },
-        { status: 404 }
-      );
+      throw CustomError(`The article "${id}" doesn't exist`, 400);
     }
     return NextResponse.json({ comment }, { status: 201 });
   } catch (error) {
+    if (error instanceof ZodError) {
+      return NextResponse.json({ message: error.message }, { status: 400 });
+    }
+    if (isCustomError(error)) {
+      return NextResponse.json(
+        { message: error.message },
+        { status: error.status }
+      );
+    }
     return NextResponse.json({ message: error }, { status: 500 });
   }
 }
