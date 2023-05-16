@@ -2,6 +2,7 @@
 // It is created for the sole reason of conforming to the project's requirements.
 // Prisma recommends having the seed file in the prisma folder.
 
+const { bcrypt } = require("@bcrypt");
 const { PrismaClient } = require("@prisma/client");
 const { fakerEN_US } = require("@faker-js/faker");
 
@@ -15,9 +16,13 @@ async function main() {
     const categoryCount = 300;
     const commentCount = 500;
 
-    const fakeUsers = generateFakeUsers(userCount);
+    const fakeUsers = generateFakeUsers(userCount, "AUTHOR");
+    const fakeAdmin = generateFakeUsers(1, "ADMIN");
 
-    await prisma.$transaction([prisma.user.createMany({ data: fakeUsers })]);
+    await prisma.$transaction([
+      prisma.user.createMany({ data: fakeUsers }),
+      prisma.user.create({ data: fakeAdmin }),
+    ]);
 
     const lastUser = await prisma.user.findFirst({
       orderBy: {
@@ -82,13 +87,16 @@ async function main() {
 }
 main();
 
-function generateFakeUsers(count) {
-  return [...Array(count)].map(() => ({
-    name: faker.person.fullName(),
-    email: faker.internet.email(),
-    password: faker.internet.password(),
-    role: "AUTHOR",
-  }));
+function generateFakeUsers(count, role) {
+  return [...Array(count)].map(() => {
+    const password = bcrypt.hash(faker.internet.password(), 10);
+    return {
+      name: faker.person.fullName(),
+      email: faker.internet.email(),
+      password,
+      role: role,
+    };
+  });
 }
 
 function generateFakeArticles(count, minAuthorId, maxAuthorId) {

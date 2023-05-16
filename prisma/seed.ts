@@ -16,9 +16,13 @@ async function main() {
     const categoryCount = 300;
     const commentCount = 500;
 
-    const fakeUsers = generateFakeUsers(userCount);
+    const fakeUsers = generateFakeUsers(userCount, Role.AUTHOR);
+    const fakeAdmin = generateFakeUsers(1, Role.ADMIN);
 
-    await prisma.$transaction([prisma.user.createMany({ data: fakeUsers })]);
+    await prisma.$transaction([
+      prisma.user.createMany({ data: fakeUsers }),
+      prisma.user.create({ data: fakeAdmin }),
+    ]);
 
     const lastUser = await prisma.user.findFirst({
       orderBy: {
@@ -83,14 +87,14 @@ async function main() {
 }
 main();
 
-function generateFakeUsers(count: number) {
+function generateFakeUsers(count: number, role: Role) {
   return [...Array(count)].map(() => {
     const password = bcrypt.hash(faker.internet.password(), 10);
     return {
       name: faker.person.fullName(),
       email: faker.internet.email(),
       password,
-      role: Role.AUTHOR,
+      role: role,
     };
   });
 }
