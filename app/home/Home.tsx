@@ -2,12 +2,12 @@
 
 import { useSession } from "next-auth/react";
 
-const Dashboard = () => {
+const Home = () => {
   const { data: session, status } = useSession();
   console.log(session);
 
   if (status == "loading") return null;
-  return <h1>Welcome to Dashboard,{session?.user.email}</h1>;
+  return <h1>Welcome Home,{session?.user.email}</h1>;
 };
 
-export default Dashboard;
+export default Home;

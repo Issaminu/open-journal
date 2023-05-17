@@ -43,9 +43,7 @@ export default function Login() {
         }
         setIsValid(false);
       } else {
-        console.log("Welcome");
-        console.log(res);
-        // router.push("/dashboard");
+        router.push("/home");
       }
     }
   };

@@ -56,7 +56,7 @@ export default function Singup() {
               await signIn("credentials", {
                 email: email,
                 password: password,
-                callbackUrl: `${window.location.origin}/dashboard`,
+                callbackUrl: `${window.location.origin}/home`,
               });
             },
             async (error) => {
