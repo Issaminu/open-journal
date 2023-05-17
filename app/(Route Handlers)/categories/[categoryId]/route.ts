@@ -1,20 +1,20 @@
-import prisma from "prisma/prisma";
+import prisma from "@/prisma/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import { CustomError, isCustomError } from "@/lib/utils";
 
 export async function GET(
   _req: NextRequest,
-  context: { params: { userId: string } }
+  context: { params: { categoryId: string } }
 ) {
   try {
-    const userId = context.params.userId;
-    const user = await prisma.user.findUnique({
-      where: { id: parseInt(userId) },
+    const categoryId = context.params.categoryId;
+    const category = await prisma.category.findUnique({
+      where: { id: parseInt(categoryId) },
     });
-    if (!user) {
-      throw CustomError(`User ${userId} does not exist`, 404);
+    if (!category) {
+      throw CustomError(`Category ${categoryId} does not exist`, 404);
     }
-    return NextResponse.json(user, { status: 200 });
+    return NextResponse.json(category, { status: 200 });
   } catch (error) {
     if (isCustomError(error)) {
       return NextResponse.json(
@@ -28,18 +28,18 @@ export async function GET(
 
 export async function DELETE(
   _req: NextRequest,
-  context: { params: { userId: string } }
+  context: { params: { categoryId: string } }
 ) {
   try {
-    const userId = context.params.userId;
-    const deletedUser = await prisma.user.delete({
-      where: { id: parseInt(userId) },
+    const categoryId = context.params.categoryId;
+    const deletedCategory = await prisma.category.delete({
+      where: { id: parseInt(categoryId) },
     });
-    if (!deletedUser) {
-      throw CustomError(`User ${userId} does not exist`, 404);
+    if (!deletedCategory) {
+      throw CustomError(`Category ${categoryId} does not exist`, 404);
     }
     return NextResponse.json(
-      { message: "User deleted successfully" },
+      { message: "Category deleted successfully" },
       { status: 200 }
     );
   } catch (error) {

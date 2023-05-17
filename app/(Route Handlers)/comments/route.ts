@@ -1,7 +1,7 @@
 import { CustomError, isCustomError } from "@/lib/utils";
 import { commentSchemaCreate, commentSchemaUpdate } from "@/lib/zod";
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "prisma/prisma";
+import prisma from "@/prisma/prisma";
 import { ZodError } from "zod";
 
 export async function GET(req: NextRequest) {

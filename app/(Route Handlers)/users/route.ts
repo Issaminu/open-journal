@@ -1,10 +1,10 @@
 import { CustomError, isCustomError } from "@/lib/utils";
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "prisma/prisma";
+import prisma from "@/prisma/prisma";
 import bcrypt from "bcrypt";
 import { userSchemaCreate } from "@/lib/zod";
 import { ZodError } from "zod";
-import { userSchemaUpdate } from "../../lib/zod";
+import { userSchemaUpdate } from "../../../lib/zod";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);

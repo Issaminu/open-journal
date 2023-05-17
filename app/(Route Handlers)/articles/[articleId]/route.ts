@@ -1,4 +1,4 @@
-import prisma from "prisma/prisma";
+import prisma from "@/prisma/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import { CustomError, isCustomError } from "@/lib/utils";
 
