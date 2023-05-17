@@ -7,12 +7,6 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-export const metadata = {
-  title: "Home",
-  description:
-    "Project of end of module for the Web Programming course @ENSET Mohammedia.",
-};
-
 export default function RootLayout({
   children,
 }: {
