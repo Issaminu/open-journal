@@ -1,17 +1,13 @@
 import prisma from "prisma/prisma";
 import bcrypt from "bcrypt";
 import { NextResponse, NextRequest } from "next/server";
-import { validateUser } from "@/lib/utils";
+import { userSchemaCreate } from "@/lib/zod";
 
-export async function POST(
-  req: NextRequest & {
-    body: { name: string; email: string; password: string };
-  }
-) {
+export async function POST(req: NextRequest) {
   try {
-    const { name, email, password } = req.body;
-    const { valid, message } = validateUser(name, email, password);
-    if (!valid) throw { message };
+    const validatedBody = userSchemaCreate.parse(req.body);
+    console.log(validatedBody);
+    const { name, email, password } = validatedBody;
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await prisma.user.create({
       data: {
