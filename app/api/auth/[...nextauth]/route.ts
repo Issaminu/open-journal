@@ -1,8 +1,10 @@
 import prisma from "prisma/prisma";
-import NextAuth, { NextAuthOptions } from "next-auth";
+import NextAuth, { NextAuthOptions, Session } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 import { CustomError } from "@/lib/utils";
+import { JWT } from "next-auth/jwt";
+import { User } from "@/lib/zod";
 
 const authOptions: NextAuthOptions = {
   session: {
@@ -15,6 +17,7 @@ const authOptions: NextAuthOptions = {
         email: { label: "Email", type: "string" },
         password: { label: "Password", type: "password" },
       },
+      // @ts-ignore
       async authorize(credentials, _req) {
         try {
           if (!credentials) return null;
@@ -28,6 +31,7 @@ const authOptions: NextAuthOptions = {
                 email: true,
                 name: true,
                 password: true,
+                role: true,
               },
             })
             .catch((error) => {
@@ -43,7 +47,8 @@ const authOptions: NextAuthOptions = {
               id: user.id,
               email: user.email,
               name: user.name,
-            } as any; // this is a temporary fix for an issue with NextAuth: https://github.com/nextauthjs/next-auth/issues/2701
+              role: user.role,
+            }; // this is a temporary fix for an issue with NextAuth: https://github.com/nextauthjs/next-auth/issues/2701
           }
         } catch (error) {
           console.error(error);
@@ -52,6 +57,25 @@ const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET,
+  pages: {
+    signIn: "/login",
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.user = user;
+      }
+      return token;
+    },
+    // @ts-ignore
+    async session({ session, token }) {
+      if (token && session) {
+        session.user = token.user;
+        return session;
+      }
+    },
+  },
 };
 const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };

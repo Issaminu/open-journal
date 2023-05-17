@@ -31,6 +31,10 @@ export const userSchema = z.object({
 });
 export const userSchemaCreate = userSchema.omit({ id: true });
 export const userSchemaUpdate = userSchema.omit({ id: true });
+const userSchemaGlobal = userSchema
+  .omit({ password: true })
+  .extend({ role: z.enum(["ADMIN", "AUTHOR"]) });
+export type User = z.infer<typeof userSchemaGlobal>;
 
 export const commentSchema = z.object({
   content: z.string().min(1).max(2500),

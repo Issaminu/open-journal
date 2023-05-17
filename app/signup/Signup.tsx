@@ -38,7 +38,6 @@ export default function Singup() {
           name: nameRef.current.value,
           password: passwordRef.current.value,
         });
-        console.log(validatedForm);
         const email = validatedForm.email;
         const name = validatedForm.name;
         const password = validatedForm.password;
@@ -48,25 +47,27 @@ export default function Singup() {
             name: name,
             password: password,
           })
-          .catch(async (error) => {
-            if (loadingBarRef.current) {
-              loadingBarRef.current.complete();
+          .then(
+            async (_success) => {
+              if (loadingBarRef.current) {
+                loadingBarRef.current.complete();
+              }
+              setIsLoading(false);
+              await signIn("credentials", {
+                email: email,
+                password: password,
+                callbackUrl: `${window.location.origin}/dashboard`,
+              });
+            },
+            async (error) => {
+              if (loadingBarRef.current) {
+                loadingBarRef.current.complete();
+              }
+              setIsLoading(false);
+              setIsValid(false);
+              console.error(error.response);
             }
-            setIsLoading(false);
-            setIsValid(false);
-            console.error("Error: ", error);
-          })
-          .finally(async () => {
-            if (loadingBarRef.current) {
-              loadingBarRef.current.complete();
-            }
-            setIsLoading(false);
-            await signIn("credentials", {
-              email: email,
-              password: password,
-              callbackUrl: `${window.location.origin}/dashboard`,
-            });
-          });
+          );
       }
       setIsLoading(false);
       setIsValid(true);
@@ -74,7 +75,7 @@ export default function Singup() {
         loadingBarRef.current.complete();
       }
     } catch (error) {
-      console.error("Error: ", error);
+      console.error(error);
     }
   };
 
@@ -126,20 +127,24 @@ export default function Singup() {
                   }
                 />
               </div>
+              {!isValid && (
+                <div className="flex items-center">
+                  <AlertIcon />
+                  <span className="text-red-600 font-semibold text-sm">
+                    This email is already in use
+                  </span>
+                </div>
+              )}
               <div>
                 <Input
                   type="text"
                   id="name"
-                  placeholder="Full Name"
+                  placeholder="Full name"
                   ref={nameRef}
                   minLength={8}
                   maxLength={100}
                   required
-                  className={
-                    isValid
-                      ? "focus:outline-cyan-600"
-                      : "border-red-600 border-2 focus:outline-red-600"
-                  }
+                  className="focus:outline-cyan-600"
                 />
               </div>
               <div>
@@ -154,14 +159,7 @@ export default function Singup() {
                   className="focus:outline-cyan-600"
                 />
               </div>
-              {!isValid && (
-                <div className="flex items-center">
-                  <AlertIcon />
-                  <span className="text-red-600 font-semibold text-sm">
-                    This email already exists
-                  </span>
-                </div>
-              )}
+
               <div className="flex justify-between gap-16 w-full">
                 <div className="flex flex-col gap-3 w-full">
                   <div className="flex items-center">

@@ -36,7 +36,6 @@ export default function Login() {
         password,
       });
       if (res && res.error) {
-        console.log("Error!");
         console.log(res);
         setIsLoading(false);
         if (loadingBarRef.current) {
@@ -129,7 +128,7 @@ export default function Login() {
                       id="remember-me"
                       name="remember-me"
                       type="checkbox"
-                      className="h-4 w-4 text-cyan-600 accent-cyan-700 focus:ring-cyan-500 border-gray-300 rounded"
+                      className="h-4 w-4 text-cyan-600 accent-cyan-700 hover:accent-cyan-700 focus:ring-cyan-500 border-gray-300 rounded"
                     />
                     <label
                       htmlFor="remember-me"
