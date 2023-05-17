@@ -90,7 +90,7 @@ export default function Singup() {
             minHeight: "100vh",
           }}
         >
-          <div className="bg-white h-screen md:h-fit md:py-12 mx-auto min-w-max flex flex-col justify-center w-[27rem] shadow md:rounded-2xl px-12">
+          <div className="bg-white h-screen w-screen md:h-fit md:py-12 mx-auto min-w-max flex flex-col justify-center md:w-[27rem] shadow md:rounded-2xl px-12">
             <LoadingBar height={3} color="#06b6d4" ref={loadingBarRef} />
             <div className="sm:mx-auto mb-10 sm:w-full sm:max-w-md">
               <div className="flex justify-center">
