@@ -6,7 +6,7 @@ import { CustomError } from "@/lib/utils";
 import { JWT } from "next-auth/jwt";
 import { User } from "@/lib/zod";
 
-const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
@@ -62,18 +62,20 @@ const authOptions: NextAuthOptions = {
     signIn: "/login",
   },
   callbacks: {
-    async jwt({ token, user }) {
+    // @ts-ignore
+    async jwt({ token, user }: { token: JWT; user: User }) {
       if (user) {
-        token.user = user;
+        token.user = { ...user };
       }
       return token;
     },
-    // @ts-ignore
-    async session({ session, token }) {
-      if (token && session) {
-        session.user = token.user;
-        return session;
-      }
+    async session({ session, token }: { session: Session; token: JWT }) {
+      return {
+        ...session,
+        user: {
+          ...token.user,
+        },
+      };
     },
   },
 };

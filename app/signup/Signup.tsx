@@ -84,26 +84,26 @@ export default function Singup() {
     return (
       <>
         <div
-          className="h-full flex flex-col justify-center w-full sm:px-6 lg:px-8"
+          className="flex h-full w-full flex-col justify-center sm:px-6 lg:px-8"
           style={{
             background: "url('/login-bg.webp') no-repeat center center fixed",
             backgroundSize: "cover",
             minHeight: "100vh",
           }}
         >
-          <div className="bg-white h-screen w-screen md:h-fit md:py-12 mx-auto min-w-max flex flex-col justify-center md:w-[27rem] shadow md:rounded-2xl px-12">
+          <div className="mx-auto flex h-screen w-screen min-w-max flex-col justify-center bg-white px-12 shadow md:h-fit md:w-[27rem] md:rounded-2xl md:py-12">
             <LoadingBar height={3} color="#06b6d4" ref={loadingBarRef} />
-            <div className="sm:mx-auto mb-10 sm:w-full sm:max-w-md">
+            <div className="mb-10 sm:mx-auto sm:w-full sm:max-w-md">
               <div className="flex justify-center">
                 <Image
-                  className="mx-auto h-8 mb-6 w-auto"
+                  className="mx-auto mb-6 h-8 w-auto"
                   src={logo}
                   alt="ENSET logo"
                   loading="eager"
                 />
               </div>
               <h2
-                className="mt-6 text-center text-3xl font-semibold "
+                className="mt-6 text-center text-3xl font-bold"
                 style={{ color: "#1e212a" }}
               >
                 Welcome!
@@ -123,14 +123,14 @@ export default function Singup() {
                   className={
                     isValid
                       ? "focus:outline-cyan-600"
-                      : "border-red-600 border-2 focus:outline-red-600"
+                      : "border-2 border-red-600 focus:outline-red-600"
                   }
                 />
               </div>
               {!isValid && (
                 <div className="flex items-center">
                   <AlertIcon />
-                  <span className="text-red-600 font-semibold text-sm">
+                  <span className="text-sm font-semibold text-red-600">
                     This email is already in use
                   </span>
                 </div>
@@ -160,14 +160,14 @@ export default function Singup() {
                 />
               </div>
 
-              <div className="flex justify-between gap-16 w-full">
-                <div className="flex flex-col gap-3 w-full">
+              <div className="flex w-full justify-between gap-16">
+                <div className="flex w-full flex-col gap-3">
                   <div className="flex items-center">
                     <input
                       id="remember-me"
                       name="remember-me"
                       type="checkbox"
-                      className="h-4 w-4 text-cyan-600 accent-cyan-700 focus:ring-cyan-500 border-gray-300 rounded"
+                      className="h-4 w-4 rounded border-gray-300 text-cyan-600 accent-cyan-700 focus:ring-cyan-500"
                     />
                     <label
                       htmlFor="remember-me"
@@ -179,14 +179,14 @@ export default function Singup() {
                   <Button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full bg-cyan-700 hover:bg-cyan-800 h-12 rounded-lg"
+                    className="h-12 w-full rounded-lg bg-cyan-700 hover:bg-cyan-800"
                   >
-                    <span className="w-full text-white text-lg">Continue</span>
+                    <span className="w-full text-lg text-white">Continue</span>
                   </Button>
-                  <div className="text-sm mt-3">
+                  <div className="mt-3 text-sm">
                     Already have an account? &nbsp;
                     <Link href="/login">
-                      <span className="font-medium cursor-pointer text-cyan-600 hover:text-cyan-800">
+                      <span className="cursor-pointer font-medium text-cyan-600 hover:text-cyan-800">
                         Sign in
                       </span>
                     </Link>
@@ -198,9 +198,9 @@ export default function Singup() {
                   </div>
                   <Button
                     variant="outline"
-                    className="w-full bg-white border-gray-400 h-12 hover:bg-gray-200 rounded-lg"
+                    className="h-12 w-full rounded-lg border-gray-400 bg-white hover:bg-gray-200"
                   >
-                    <span className="w-full flex items-center justify-evenly">
+                    <span className="flex w-full items-center justify-evenly">
                       <GoogleIcon />
                       <span className="h-full text-black">
                         Continue with Google
@@ -210,9 +210,9 @@ export default function Singup() {
                   </Button>
                   <Button
                     variant="outline"
-                    className="w-full bg-white border-gray-400 h-12 hover:bg-gray-200 rounded-lg"
+                    className="h-12 w-full rounded-lg border-gray-400 bg-white hover:bg-gray-200"
                   >
-                    <span className="w-full flex items-center justify-evenly">
+                    <span className="flex w-full items-center justify-evenly">
                       <GithubIcon />
                       <span className="h-full text-black">
                         Continue with Github

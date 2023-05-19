@@ -55,6 +55,11 @@ module.exports = {
       },
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
+        articleTitle: ["var(--font-quincyBlackItalic)"],
+        quincyBlack: ["var(--font-quincyBlack)"],
+        articleBody: ["var(--font-lora)"],
+        loraBold: ["var(--font-lora)"],
+        tinos: ["var(--font-tinos)"],
       },
       keyframes: {
         "accordion-down": {

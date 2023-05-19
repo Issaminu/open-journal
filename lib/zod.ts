@@ -6,6 +6,7 @@ export const articleSchema = z.object({
   authorId: z.number().int().positive(),
   isPublished: z.boolean(),
   id: z.number().int().positive(),
+  image: z.string().url(),
 });
 export const articleSchemaCreate = articleSchema.omit({ id: true });
 export const articleSchemaUpdate = articleSchema.omit({
@@ -18,6 +19,14 @@ export const articleSchemaDelete = articleSchema.omit({
   authorId: true,
   isPublished: true,
 });
+
+const articleSchemaGlobal = articleSchema
+  .omit({ isPublished: true, authorId: true })
+  .extend({
+    createdAt: z.date(),
+    author: z.object({ id: z.number(), name: z.string() }),
+  });
+export type Article = z.infer<typeof articleSchemaGlobal>;
 
 export const userSchema = z.object({
   name: z

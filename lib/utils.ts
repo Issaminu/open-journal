@@ -43,3 +43,11 @@ export function CustomError(message: string, status?: number): CustomErrorType {
 export function isCustomError(x: any): x is CustomErrorType {
   return !!x && "status" in x && "message" in x;
 }
+
+export function truncateString(str: string, n: number) {
+  return str.length > n ? str.slice(0, n - 1) + "&hellip;" : str;
+}
+
+export function routeIsLoginOrSignup(pathname: string) {
+  return pathname.startsWith("/login") || pathname.startsWith("/signup");
+}
