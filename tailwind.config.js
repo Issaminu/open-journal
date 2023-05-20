@@ -60,6 +60,8 @@ module.exports = {
         articleBody: ["var(--font-lora)"],
         loraBold: ["var(--font-lora)"],
         tinos: ["var(--font-tinos)"],
+        tiempo: ["var(--font-tiempo)"],
+        freight: ["var(--font-freight)"],
       },
       keyframes: {
         "accordion-down": {

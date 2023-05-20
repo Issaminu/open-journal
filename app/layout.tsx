@@ -32,6 +32,18 @@ const tinos = Tinos({
   variable: "--font-tinos",
 });
 
+const freight = localFont({
+  src: "../public/fonts/Freight-Regular.ttf",
+  display: "swap",
+  variable: "--font-freight",
+});
+
+const tiempo = localFont({
+  src: "../public/fonts/Tiempo-Regular.otf",
+  display: "swap",
+  variable: "--font-tiempo",
+});
+
 export default function RootLayout({
   children,
   params,
@@ -44,8 +56,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.className} ${quincyBlackItalic.variable} ${quincyBlack.variable} ${lora.variable} ${tinos.variable}`}
+      className={`${inter.className} ${quincyBlackItalic.variable} ${quincyBlack.variable} ${lora.variable} ${tinos.variable} ${freight.variable} ${tiempo.variable}`}
     >
+      <head>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </head>
       <body>
         <Providers session={params.session}>{children}</Providers>
       </body>

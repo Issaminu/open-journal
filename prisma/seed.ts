@@ -1,4 +1,4 @@
-const { bcrypt } = require("@bcrypt");
+// const { bcrypt } = require("@bcrypt");
 const { PrismaClient } = require("@prisma/client");
 const { fakerEN_US } = require("@faker-js/faker");
 
@@ -17,11 +17,11 @@ async function main() {
     const commentCount = 500;
 
     const fakeUsers = generateFakeUsers(userCount, Role.AUTHOR);
-    const fakeAdmin = generateFakeUsers(1, Role.ADMIN);
+    // const fakeAdmin = generateFakeUsers(1, Role.ADMIN);
 
     await prisma.$transaction([
       prisma.user.createMany({ data: fakeUsers }),
-      prisma.user.create({ data: fakeAdmin }),
+      // prisma.user.create({ data: fakeAdmin }),
     ]);
 
     const lastUser = await prisma.user.findFirst({
@@ -89,11 +89,11 @@ main();
 
 function generateFakeUsers(count: number, role: Role) {
   return [...Array(count)].map(() => {
-    const password = bcrypt.hash(faker.internet.password(), 10);
+    // const password = bcrypt.hash(faker.internet.password(), 10);
     return {
       name: faker.person.fullName(),
       email: faker.internet.email(),
-      password,
+      password: faker.internet.password(),
       role: role,
     };
   });
@@ -107,11 +107,27 @@ function generateFakeArticles(
   return [...Array(count)].map(() => {
     const title = faker.lorem.sentence();
     const content = faker.lorem.paragraphs();
+    const category1 = faker.word.noun();
+    const category2 = faker.word.noun();
+    const category3 = faker.word.noun();
     return {
       title: title.charAt(0).toUpperCase() + title.slice(1),
       content: content.charAt(0).toUpperCase() + content.slice(1),
       isPublished: true,
       authorId: faker.number.int({ min: minAuthorId, max: maxAuthorId }),
+      categories: {
+        create: [
+          {
+            name: category1.charAt(0).toUpperCase() + category1.slice(1),
+          },
+          {
+            name: category2.charAt(0).toUpperCase() + category2.slice(1),
+          },
+          {
+            name: category3.charAt(0).toUpperCase() + category3.slice(1),
+          },
+        ],
+      },
       image: faker.image.url(),
     };
   });
