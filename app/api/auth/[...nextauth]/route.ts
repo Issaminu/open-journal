@@ -6,6 +6,7 @@ import { CustomError } from "@/lib/utils";
 import { JWT } from "next-auth/jwt";
 import { User } from "@/lib/zod";
 
+// @ts-ignore
 export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
