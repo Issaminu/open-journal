@@ -5,6 +5,9 @@ import PostCard from "@/components/my-components/PostCard";
 import { Article } from "@/lib/zod";
 import { useSession } from "next-auth/react";
 import type { getMetaDataType } from "./page";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { useState } from "react";
+import axios, { AxiosResponse } from "axios";
 const Home = ({
   articles,
   metaData,
@@ -13,6 +16,32 @@ const Home = ({
   metaData: getMetaDataType;
 }) => {
   const { data: session } = useSession();
+  const [postNum, setPostNum] = useState(3);
+  const [infiniteArticles, setInfiniteArticles] = useState<Article[]>([
+    ...articles,
+  ]);
+  const fetchData = async (numberOfPosts: number) => {
+    console.log("fetching more data");
+    const res = (await axios
+      .get(`/articles/?take=${numberOfPosts}&skip=${postNum}`)
+      .then(
+        (data) => {
+          setPostNum(postNum + numberOfPosts);
+          return data;
+        },
+        (error) => {
+          console.error(error);
+        }
+      )) as AxiosResponse;
+    let newArticles = res.data.articles as Article[]; // This is not exactly true, as article.createdAt fields are of type string, not Date.
+
+    // When getting data from an API, Date objects automatically get stringified.
+    // The following Array.map() turns them back into Date objects.
+    newArticles.map((article) => {
+      article.createdAt = new Date(article.createdAt);
+    });
+    setInfiniteArticles([...infiniteArticles, ...newArticles]);
+  };
   if (!session) return null;
   return (
     <div
@@ -27,10 +56,18 @@ const Home = ({
         <div className="mx-auto mb-16 mt-12 flex w-fit flex-col justify-center">
           <Header metaData={metaData} />
         </div>
-        <div className="flex flex-wrap justify-center">
-          {articles.map((article) => (
-            <PostCard key={article.id} user={session.user} article={article} />
-          ))}
+        <div>
+          <InfiniteScroll
+            dataLength={infiniteArticles.length}
+            next={() => fetchData(20)}
+            hasMore={true}
+            className="flex flex-wrap justify-center"
+            loader={<></>} //TODO: Create a component for a skeleton animation of PostCard
+          >
+            {infiniteArticles.map((article) => (
+              <PostCard key={article.id} article={article} />
+            ))}
+          </InfiniteScroll>
         </div>
       </div>
     </div>

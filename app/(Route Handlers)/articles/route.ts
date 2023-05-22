@@ -16,6 +16,19 @@ export async function GET(req: NextRequest) {
     const articles = await prisma.article.findMany({
       where: { id: { gte: skip } },
       take: take,
+      select: {
+        id: true,
+        title: true,
+        content: true,
+        createdAt: true,
+        image: true,
+        author: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
     });
     return NextResponse.json({ articles }, { status: 200 });
   } catch (error) {

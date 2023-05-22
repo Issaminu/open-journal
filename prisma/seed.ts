@@ -111,7 +111,7 @@ function generateFakeArticles(
     const category2 = faker.word.noun();
     const category3 = faker.word.noun();
     return {
-      title: title.charAt(0).toUpperCase() + title.slice(1),
+      title: title.charAt(0).toUpperCase() + title.slice(1).slice(0, -1), // the last slice is for removing the dot from the end of sentence
       content: content.charAt(0).toUpperCase() + content.slice(1),
       isPublished: true,
       authorId: faker.number.int({ min: minAuthorId, max: maxAuthorId }),
