@@ -51,3 +51,54 @@ export function truncateString(str: string, n: number) {
 export function routeIsLoginOrSignup(pathname: string) {
   return pathname.startsWith("/login") || pathname.startsWith("/signup");
 }
+
+export function getPrettyDate(date?: Date) {
+  const options = {
+    month: "short",
+    day: "numeric",
+  } as Intl.DateTimeFormatOptions;
+  const day = date || new Date();
+  const suffix = getOrdinalSuffix(day.getDate());
+  return `${day.toLocaleString("en-US", options)}${suffix}`;
+}
+
+export function getPrettyDateWithYear(date?: Date) {
+  const options = {
+    month: "short",
+    day: "numeric",
+  } as Intl.DateTimeFormatOptions;
+  const day = date || new Date();
+  const suffix = getOrdinalSuffix(day.getDate());
+  return `${day.toLocaleString("en-US", options)}${suffix} ${day
+    .getFullYear()
+    .toString()
+    .slice(-2)}`;
+}
+
+export function getPrettyDateWithFullYear(date?: Date) {
+  const options = {
+    month: "short",
+    day: "numeric",
+  } as Intl.DateTimeFormatOptions;
+  const day = date || new Date();
+  const suffix = getOrdinalSuffix(day.getDate());
+  return `${day.toLocaleString("en-US", options)}${suffix} ${day
+    .getFullYear()
+    .toString()}`;
+}
+
+export function getOrdinalSuffix(day: number) {
+  if (day >= 11 && day <= 13) {
+    return "th";
+  }
+  switch (day % 10) {
+    case 1:
+      return "st";
+    case 2:
+      return "nd";
+    case 3:
+      return "rd";
+    default:
+      return "th";
+  }
+}

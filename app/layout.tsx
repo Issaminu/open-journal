@@ -44,6 +44,12 @@ const tiempo = localFont({
   variable: "--font-tiempo",
 });
 
+const hubot = localFont({
+  src: "../public/fonts/Hubot-Sans.woff2",
+  display: "swap",
+  variable: "--font-hubot",
+});
+
 export default function RootLayout({
   children,
   params,
@@ -56,11 +62,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.className} ${quincyBlackItalic.variable} ${quincyBlack.variable} ${lora.variable} ${tinos.variable} ${freight.variable} ${tiempo.variable}`}
+      className={`${inter.className} ${quincyBlackItalic.variable} ${quincyBlack.variable} ${lora.variable} ${tinos.variable} ${freight.variable} ${tiempo.variable} ${hubot.variable}`}
     >
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Projet Web | ENSET Mohammedia</title>
       </head>
       <body>
         <Providers session={params.session}>{children}</Providers>

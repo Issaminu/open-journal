@@ -24,9 +24,21 @@ const getArticles = async (numberOfArticles: number): Promise<Article[]> => {
   })) as Article[];
 };
 
+const getMetaData = async () => {
+  const articleCount = await prisma.article.count({});
+  const userCount = await prisma.user.count({});
+  let latestAddition = await prisma.article.findFirst({
+    orderBy: { createdAt: "desc" },
+    select: { createdAt: true },
+  });
+  return { articleCount, userCount, latestAddition: latestAddition };
+};
+export type getMetaDataType = Awaited<ReturnType<typeof getMetaData>>;
+
 const homePage = async () => {
   const articles = await getArticles(50);
-  return <Home articles={articles} />;
+  const metaData: getMetaDataType = await getMetaData();
+  return <Home articles={articles} metaData={metaData} />;
 };
 
 export default homePage;

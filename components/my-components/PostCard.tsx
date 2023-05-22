@@ -3,6 +3,7 @@ import { Article, User } from "../../lib/zod";
 import Image from "next/image";
 import Link from "next/link";
 import { memo } from "react";
+import { getPrettyDateWithFullYear } from "@/lib/utils";
 const PostCard = memo(function PostCard({
   user,
   article,
@@ -30,7 +31,7 @@ const PostCard = memo(function PostCard({
                     </div>
                     <span className="mx-2 text-[#a48595]">|</span>
                     <span className="text-[#a48595]">
-                      {article.createdAt.toLocaleDateString()}
+                      {getPrettyDateWithFullYear(article.createdAt)}
                     </span>
                     <span className="mx-2 text-[#a48595]">|</span>
                     <span className="text-[#a48595]">

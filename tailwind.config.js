@@ -62,6 +62,7 @@ module.exports = {
         tinos: ["var(--font-tinos)"],
         tiempo: ["var(--font-tiempo)"],
         freight: ["var(--font-freight)"],
+        hubot: ["var(--font-hubot)"],
       },
       keyframes: {
         "accordion-down": {

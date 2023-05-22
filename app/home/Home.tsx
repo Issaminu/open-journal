@@ -1,10 +1,17 @@
 "use client";
 
+import Header from "@/components/my-components/Header";
 import PostCard from "@/components/my-components/PostCard";
 import { Article } from "@/lib/zod";
 import { useSession } from "next-auth/react";
-
-const Home = ({ articles }: { articles: Article[] }) => {
+import type { getMetaDataType } from "./page";
+const Home = ({
+  articles,
+  metaData,
+}: {
+  articles: Article[];
+  metaData: getMetaDataType;
+}) => {
   const { data: session } = useSession();
   if (!session) return null;
   return (
@@ -18,10 +25,7 @@ const Home = ({ articles }: { articles: Article[] }) => {
     >
       <div className="my-6">
         <div className="mx-auto mb-16 mt-12 flex w-fit flex-col justify-center">
-          <h1 className="font-articleTitle text-6xl text-[#ecd7d7]">
-            {session.user.name}&apos;s blog
-          </h1>
-          {/* <hr className="my-8 h-px border-0 bg-[#ecd7d7]" /> */}
+          <Header metaData={metaData} />
         </div>
         <div className="flex flex-wrap justify-center">
           {articles.map((article) => (
