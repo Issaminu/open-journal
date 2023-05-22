@@ -36,7 +36,7 @@ const getMetaData = async () => {
 export type getMetaDataType = Awaited<ReturnType<typeof getMetaData>>;
 
 const homePage = async () => {
-  const articles = await getArticles(20);
+  const articles = await getArticles(50);
   const metaData: getMetaDataType = await getMetaData();
   return <Home articles={articles} metaData={metaData} />;
 };

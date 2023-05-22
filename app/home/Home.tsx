@@ -6,7 +6,7 @@ import { Article } from "@/lib/zod";
 import { useSession } from "next-auth/react";
 import type { getMetaDataType } from "./page";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import axios, { AxiosResponse } from "axios";
 const Home = ({
   articles,
@@ -20,28 +20,31 @@ const Home = ({
   const [infiniteArticles, setInfiniteArticles] = useState<Article[]>([
     ...articles,
   ]);
-  const fetchData = async (numberOfPosts: number) => {
-    console.log("fetching more data");
-    const res = (await axios
-      .get(`/articles/?take=${numberOfPosts}&skip=${postNum}`)
-      .then(
-        (data) => {
-          setPostNum(postNum + numberOfPosts);
-          return data;
-        },
-        (error) => {
-          console.error(error);
-        }
-      )) as AxiosResponse;
-    let newArticles = res.data.articles as Article[]; // This is not exactly true, as article.createdAt fields are of type string, not Date.
+  const fetchData = useCallback(
+    async (numberOfPosts: number) => {
+      console.log("fetching more data ...");
+      const res = (await axios
+        .get(`/articles/?take=${numberOfPosts}&skip=${postNum}`)
+        .then(
+          (data) => {
+            setPostNum(postNum + numberOfPosts);
+            return data;
+          },
+          (error) => {
+            console.error(error);
+          }
+        )) as AxiosResponse;
+      let newArticles = res.data.articles as Article[]; // This is not exactly true, as article.createdAt fields are of type string, not Date.
 
-    // When getting data from an API, Date objects automatically get stringified.
-    // The following Array.map() turns them back into Date objects.
-    newArticles.map((article) => {
-      article.createdAt = new Date(article.createdAt);
-    });
-    setInfiniteArticles([...infiniteArticles, ...newArticles]);
-  };
+      // When getting data from an API, Date objects automatically get stringified.
+      // The following Array.map() turns them back into Date objects.
+      newArticles.map((article) => {
+        article.createdAt = new Date(article.createdAt);
+      });
+      setInfiniteArticles([...infiniteArticles, ...newArticles]);
+    },
+    [infiniteArticles, postNum]
+  );
   if (!session) return null;
   return (
     <div
