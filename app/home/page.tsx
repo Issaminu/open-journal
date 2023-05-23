@@ -19,6 +19,12 @@ const getArticles = async (numberOfArticles: number): Promise<Article[]> => {
           name: true,
         },
       },
+      category: {
+        select: {
+          id: true,
+          name: true,
+        },
+      },
     },
     take: numberOfArticles,
   })) as Article[];

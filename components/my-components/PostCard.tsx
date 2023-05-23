@@ -13,9 +13,11 @@ const PostCard = memo(function PostCard({ article }: { article: Article }) {
             <div className="flex h-full flex-col justify-between space-y-7">
               <div className="px-6">
                 <div>
-                  <h1 className="font-articleTitle text-3xl text-[#ecd7d7] transition-colors duration-500 ease-in-out group-hover:text-white">
-                    {article.title}
-                  </h1>
+                  <div className="flex flex-row">
+                    <h1 className="font-articleTitle text-3xl text-[#ecd7d7] transition-colors duration-500 ease-in-out group-hover:text-white">
+                      {article.title}
+                    </h1>
+                  </div>
                   <div className="mb-4 mt-2 flex w-full flex-row justify-between truncate text-[#a48595] transition-colors duration-500 ease-in-out group-hover:text-[#92687e]">
                     <div>
                       <span className="mr-2">By</span>
@@ -23,14 +25,20 @@ const PostCard = memo(function PostCard({ article }: { article: Article }) {
                         {article.author.name}
                       </span>
                     </div>
-                    <span className="mx-2 ">·</span>
+                    {/* <span className="mx-2 ">·</span>
                     <span className="">
                       {getPrettyDateWithFullYear(article.createdAt)}
-                    </span>
+                    </span> */}
                     <span className="mx-2 ">·</span>
                     <span className="">
                       {Math.ceil(article.content.length / 200)} minute read
                     </span>
+                    <span className="mx-2">·</span>
+                    <div className="flex items-center text-center text-sm font-semibold text-[#a48595]">
+                      <span className="rounded-3xl border-[0.1rem] border-[#92687e] px-2 transition-colors duration-500 ease-in-out group-hover:text-[#92687e]">
+                        {article.category.name}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -38,8 +46,8 @@ const PostCard = memo(function PostCard({ article }: { article: Article }) {
                 <div className="px-6">
                   <Image
                     src={article.image}
-                    width={60000}
-                    height={100}
+                    width={1024}
+                    height={600}
                     alt={article.title}
                     loading="lazy"
                     className="rounded-xl"
@@ -48,7 +56,7 @@ const PostCard = memo(function PostCard({ article }: { article: Article }) {
                 </div>
                 <div className="px-6">
                   <p
-                    className={`line-height-4 line-clamp-4 whitespace-normal text-justify font-tiempo text-lg text-[#9e9896] transition duration-200 ease-in-out group-hover:text-white`}
+                    className={`line-height-4 line-clamp-4 whitespace-normal text-justify font-hubot text-lg text-[#9e9896] transition duration-200 ease-in-out group-hover:text-white`}
                   >
                     {article.content}
                   </p>

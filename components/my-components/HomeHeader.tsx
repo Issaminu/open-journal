@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import journalIcon from "../../public/journal-icon.png";
 import { getPrettyDate } from "@/lib/utils";
 
-const Header = ({ metaData }: { metaData: getMetaDataType }) => {
+const HomeHeader = ({ metaData }: { metaData: getMetaDataType }) => {
   const latestAddition = useMemo(
     () => getPrettyDate(metaData.latestAddition?.createdAt),
     [metaData.latestAddition?.createdAt]
@@ -41,4 +41,4 @@ const Header = ({ metaData }: { metaData: getMetaDataType }) => {
   );
 };
 
-export default Header;
+export default HomeHeader;

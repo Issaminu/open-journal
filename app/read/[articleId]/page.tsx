@@ -1,4 +1,5 @@
 import Article from "@/app/read/[articleId]/Article";
+import { markdownToHtml } from "@/lib/utils";
 import prisma from "@/prisma/prisma";
 
 export const revalidate = 1800;
@@ -21,7 +22,7 @@ async function getArticleById(articleId: number) {
           name: true,
         },
       },
-      categories: {
+      category: {
         select: {
           id: true,
           name: true,
@@ -58,7 +59,9 @@ export type ArticleType = NonNullable<
 
 const Page = async ({ params }: { params: { articleId: string } }) => {
   const article = await getArticleById(parseInt(params.articleId));
-  if (!article) return <>bruh</>;
+  if (!article) return <span>Error!</span>;
+  // article.content = await markdownToHtml(article.content);
+  // console.log(article.content);
   return (
     <div>
       <Article article={article} />

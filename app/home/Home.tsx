@@ -1,6 +1,6 @@
 "use client";
 
-import Header from "@/components/my-components/Header";
+import HomeHeader from "@/components/my-components/HomeHeader";
 import PostCard from "@/components/my-components/PostCard";
 import { Article } from "@/lib/zod";
 import { useSession } from "next-auth/react";
@@ -57,7 +57,7 @@ const Home = ({
     >
       <div className="my-6">
         <div className="mx-auto mb-16 mt-12 flex w-fit flex-col justify-center">
-          <Header metaData={metaData} />
+          <HomeHeader metaData={metaData} />
         </div>
         <div>
           <InfiniteScroll

@@ -25,6 +25,7 @@ const articleSchemaGlobal = articleSchema
   .extend({
     createdAt: z.date(),
     author: z.object({ id: z.number(), name: z.string() }),
+    category: z.object({ id: z.number(), name: z.string() }),
   });
 export type Article = z.infer<typeof articleSchemaGlobal>;
 
