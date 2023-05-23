@@ -1,7 +1,7 @@
 import Article from "@/app/read/[articleId]/Article";
 import prisma from "@/prisma/prisma";
 
-export const revalidate = 600;
+export const revalidate = 1800;
 
 async function getArticleById(articleId: number) {
   return await prisma.article.findUnique({
