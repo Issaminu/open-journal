@@ -45,30 +45,6 @@ export async function generateStaticParams() {
     },
     select: {
       id: true,
-      title: true,
-      image: true,
-      content: true,
-      createdAt: true,
-      updatedAt: true,
-      author: {
-        select: {
-          id: true,
-          name: true,
-        },
-      },
-      categories: {
-        select: {
-          id: true,
-          name: true,
-        },
-      },
-      comments: {
-        select: {
-          id: true,
-          content: true,
-          authorId: true,
-        },
-      },
     },
   });
   return articles.map((article) => ({
