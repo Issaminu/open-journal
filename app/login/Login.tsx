@@ -3,7 +3,7 @@ import { useSession, signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef } from "react";
 import LoadingBar, { LoadingBarRef } from "react-top-loading-bar";
 import logo from "../../public/enset-logo.webp";
 import { Input } from "@/components/ui/input";
