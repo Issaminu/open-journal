@@ -17,14 +17,14 @@ enum Role {
 }
 
 model User {
-  id       Int        @id @default(autoincrement())
-  name     String
-  email    String     @unique
-  password String
-  role     Role       @default(AUTHOR)
-  Article  Article[]
-  Comment  Comment[]
-  Category Category[]
+  id         Int        @id @default(autoincrement())
+  name       String
+  email      String     @unique
+  password   String
+  role       Role       @default(AUTHOR)
+  articles   Article[]
+  comments   Comment[]
+  categories Category[]
 }
 
 model Article {
@@ -45,15 +45,15 @@ model Category {
   id       Int       @id @default(autoincrement())
   name     String
   Article  Article[]
-  Author   User      @relation(fields: [authorId], references: [id])
+  author   User      @relation(fields: [authorId], references: [id])
   authorId Int
 }
 
 model Comment {
   id        Int     @id @default(autoincrement())
   content   String
-  Article   Article @relation(fields: [articleId], references: [id])
-  Author    User    @relation(fields: [authorId], references: [id])
+  article   Article @relation(fields: [articleId], references: [id])
+  author    User    @relation(fields: [authorId], references: [id])
   authorId  Int
   articleId Int
 }

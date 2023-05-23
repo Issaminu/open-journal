@@ -16,7 +16,7 @@ const PostCard = memo(function PostCard({ article }: { article: Article }) {
                   <h1 className="font-articleTitle text-3xl text-[#ecd7d7] transition-colors duration-500 ease-in-out group-hover:text-white">
                     {article.title}
                   </h1>
-                  <div className="mb-4 mt-2 flex w-full flex-row justify-between truncate text-[#a48595] transition-colors duration-500 ease-in-out group-hover:text-[#EED3D3]">
+                  <div className="mb-4 mt-2 flex w-full flex-row justify-between truncate text-[#a48595] transition-colors duration-500 ease-in-out group-hover:text-[#92687e]">
                     <div>
                       <span className="mr-2">By</span>
                       <span className="truncate font-bold">

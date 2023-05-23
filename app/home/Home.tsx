@@ -6,7 +6,7 @@ import { Article } from "@/lib/zod";
 import { useSession } from "next-auth/react";
 import type { getMetaDataType } from "./page";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import axios, { AxiosResponse } from "axios";
 const Home = ({
   articles,
