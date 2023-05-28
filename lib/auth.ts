@@ -5,11 +5,13 @@ import bcrypt from "bcrypt";
 import { CustomError } from "@/lib/utils";
 import { JWT } from "next-auth/jwt";
 import { User } from "@/lib/zod";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
 export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
+  adapter: PrismaAdapter(prisma as any), // Temporary fix for https://github.com/prisma/prisma/issues/16117
   providers: [
     CredentialsProvider({
       id: "credentials",
@@ -64,8 +66,21 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     // @ts-ignore
     async jwt({ token, user }: { token: JWT; user: User }) {
-      if (user) {
-        token.user = { ...user };
+      const dbUser = await prisma.user.findUnique({
+        where: {
+          email: token.user.email,
+        },
+        select: {
+          id: true,
+          email: true,
+          name: true,
+          role: true,
+        },
+      });
+      if (!dbUser) {
+        if (user) {
+          token.user = { ...user };
+        }
       }
       return token;
     },

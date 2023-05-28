@@ -1,5 +1,5 @@
 import { CustomError, isCustomError } from "@/lib/utils";
-import { categorySchemaUpdate } from "@/lib/zod";
+import { categorySchemaCreate, categorySchemaUpdate } from "@/lib/zod";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma/prisma";
 import { ZodError } from "zod";
@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    const validatedBody = categorySchemaUpdate.parse(req.body);
+    const validatedBody = categorySchemaCreate.parse(req.body);
     const { name } = validatedBody;
     const categories = await prisma.category.findMany({
       where: {

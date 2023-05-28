@@ -7,7 +7,7 @@ import { getPrettyDateWithFullYear } from "@/lib/utils";
 const PostCard = memo(function PostCard({ article }: { article: Article }) {
   return (
     <>
-      <div className="mx-4 my-4 box-border h-full">
+      <div className="mx-4 my-4 box-border min-h-full">
         <Card className="group min-h-full items-center rounded-xl border-none bg-[#3c3a3a] bg-opacity-40 py-8 shadow-lg  drop-shadow-lg backdrop-blur-lg transition-all duration-300 ease-in-out hover:scale-105 hover:cursor-pointer hover:rounded-3xl hover:bg-[#2a262c] hover:shadow-2xl xl:w-[32rem]">
           <Link href={`/read/${article.id}`} className="h-full">
             <div className="flex h-full flex-col justify-between space-y-7">
@@ -31,7 +31,7 @@ const PostCard = memo(function PostCard({ article }: { article: Article }) {
                     </span> */}
                     <span className="mx-2 ">·</span>
                     <span className="">
-                      {Math.ceil(article.content.length / 200)} minute read
+                      {Math.ceil(article.content.length / 200)} min read
                     </span>
                     <span className="mx-2">·</span>
                     <div className="flex items-center text-center text-sm font-semibold text-[#a48595]">

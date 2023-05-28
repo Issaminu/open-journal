@@ -1,4 +1,4 @@
-import { articleSchemaUpdate } from "@/lib/zod";
+import { articleSchemaUpdate, articleSchemaCreate } from "@/lib/zod";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma/prisma";
 import { ZodError } from "zod";
@@ -14,8 +14,10 @@ export async function GET(req: NextRequest) {
     const take = parseInt(takeParam);
     const skip = skipParam ? parseInt(skipParam) + 1 : 0;
     const articles = await prisma.article.findMany({
-      where: { id: { gte: skip } },
-      take: take,
+      where: {
+        isPublished: true,
+        id:{gte:skip}
+      },
       select: {
         id: true,
         title: true,
@@ -28,7 +30,14 @@ export async function GET(req: NextRequest) {
             name: true,
           },
         },
+        category: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
       },
+      take:take
     });
     return NextResponse.json({ articles }, { status: 200 });
   } catch (error) {
@@ -38,9 +47,9 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
-    const validatedBody = articleSchemaUpdate.parse(req.body);
+    const validatedBody = articleSchemaCreate.parse(req.body);
 
-    const { title, content } = validatedBody;
+    const { title, content, categoryId } = validatedBody;
     const tempStockImage =
       "https://static8.depositphotos.com/1423699/902/i/450/depositphotos_9022196-stock-photo-newspaper.jpg";
     const article = await prisma.article.create({
@@ -49,6 +58,7 @@ export async function POST(req: NextRequest) {
         content,
         isPublished: true,
         image: tempStockImage,
+        categoryId: categoryId,
         authorId: 0, //temp value
       },
     });

@@ -45,7 +45,6 @@ const Home = ({
     },
     [infiniteArticles, postNum]
   );
-  if (!session) return null;
   return (
     <div
       className="h-full w-full overflow-x-hidden px-6 lg:px-8"

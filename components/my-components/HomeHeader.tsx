@@ -17,7 +17,9 @@ const HomeHeader = ({ metaData }: { metaData: getMetaDataType }) => {
           loading="eager"
           src={journalIcon}
           alt="Journal icon"
+          priority={true}
           width={70}
+          quality={100}
           style={{ objectFit: "contain" }}
         />
         <div className="flex flex-col justify-center">

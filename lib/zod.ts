@@ -5,6 +5,7 @@ export const articleSchema = z.object({
   content: z.string().min(1).max(1000),
   authorId: z.number().int().positive(),
   isPublished: z.boolean(),
+  categoryId: z.number().min(1),
   id: z.number().int().positive(),
   image: z.string().url(),
 });
@@ -18,6 +19,8 @@ export const articleSchemaDelete = articleSchema.omit({
   content: true,
   authorId: true,
   isPublished: true,
+  categoryId: true,
+  image: true,
 });
 
 const articleSchemaGlobal = articleSchema

@@ -54,6 +54,10 @@ export function routeIsLoginOrSignup(pathname: string) {
   return pathname.startsWith("/login") || pathname.startsWith("/signup");
 }
 
+export function routeIsHomeOrArticle(pathname: string) {
+  return pathname === "/home" || pathname.startsWith("/read");
+}
+
 export function getPrettyDate(date?: Date) {
   const options = {
     month: "short",
