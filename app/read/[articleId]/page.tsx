@@ -1,11 +1,10 @@
 import Article from "@/app/read/[articleId]/Article";
-import { markdownToHtml } from "@/lib/utils";
 import prisma from "@/prisma/prisma";
 
 export const revalidate = 1800;
 
 async function getArticleById(articleId: number) {
-  return await prisma.article.findUnique({
+  const article = await prisma.article.findUnique({
     where: {
       id: articleId,
     },
@@ -33,25 +32,39 @@ async function getArticleById(articleId: number) {
           id: true,
           content: true,
           authorId: true,
+          author: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+          updatedAt: true,
         },
       },
     },
   });
+  if (!article) return null;
+  article.comments.sort(
+    (a, b) => b.updatedAt.getTime() - a.updatedAt.getTime()
+  );
+  return article;
 }
 
-export async function generateStaticParams() {
-  const articles = await prisma.article.findMany({
-    where: {
-      isPublished: true,
-    },
-    select: {
-      id: true,
-    },
-  });
-  return articles.map((article) => ({
-    articleId: article.id.toString(),
-  }));
-}
+// Commented out `generateStaticParams` because of a Next.js with Server Actions, @see: https://github.com/vercel/next.js/issues/49408
+
+// export async function generateStaticParams() {
+//   const articles = await prisma.article.findMany({
+//     where: {
+//       isPublished: true,
+//     },
+//     select: {
+//       id: true,
+//     },
+//   });
+//   return articles.map((article) => ({
+//     articleId: article.id.toString(),
+//   }));
+// }
 
 export type ArticleType = NonNullable<
   Awaited<ReturnType<typeof getArticleById>>
@@ -60,8 +73,6 @@ export type ArticleType = NonNullable<
 const Page = async ({ params }: { params: { articleId: string } }) => {
   const article = await getArticleById(parseInt(params.articleId));
   if (!article) return <span>Error!</span>;
-  // article.content = await markdownToHtml(article.content);
-  // console.log(article.content);
   return (
     <div>
       <Article article={article} />

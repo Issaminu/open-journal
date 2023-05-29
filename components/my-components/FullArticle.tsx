@@ -1,5 +1,6 @@
 "use client";
 import { ArticleType } from "@/app/read/[articleId]/page";
+import Comments from "@/components/my-components/Comments";
 import { getPrettyDateWithFullYear } from "@/lib/utils";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -39,6 +40,7 @@ const FullArticle = ({ article }: { article: ArticleType }) => {
       setCategoryColor(color);
     }
   }, [article.id, categoryColor]);
+
   return (
     <div className="full-article my-10 flex items-center justify-center">
       <div className="mx-auto min-h-full bg-opacity-0 px-6 py-8 text-center lg:max-w-[80rem]">
@@ -98,6 +100,7 @@ const FullArticle = ({ article }: { article: ArticleType }) => {
           <article className="line-height-4 prose prose-neutral whitespace-normal text-justify  text-lg text-[#F0D4DA] lg:prose-xl prose-h1:text-[#cfc5c2] ">
             <div dangerouslySetInnerHTML={{ __html: article.content }} />
           </article>
+          <Comments comments={article.comments} article={article} />
         </div>
       </div>
     </div>

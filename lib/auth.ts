@@ -1,7 +1,7 @@
 import prisma from "prisma/prisma";
 import { NextAuthOptions, Session } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { CustomError } from "@/lib/utils";
 import { JWT } from "next-auth/jwt";
 import { User } from "@/lib/zod";
@@ -66,17 +66,18 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     // @ts-ignore
     async jwt({ token, user }: { token: JWT; user: User }) {
-      const dbUser = await prisma.user.findUnique({
-        where: {
-          email: token.user.email,
-        },
-        select: {
-          id: true,
-          email: true,
-          name: true,
-          role: true,
-        },
-      });
+      // const dbUser = await prisma.user.findUnique({
+      //   where: {
+      //     email: token.user.email,
+      //   },
+      //   select: {
+      //     id: true,
+      //     email: true,
+      //     name: true,
+      //     role: true,
+      //   },
+      // });
+      const dbUser = null; //TEMP
       if (!dbUser) {
         if (user) {
           token.user = { ...user };

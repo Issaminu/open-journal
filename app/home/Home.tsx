@@ -3,7 +3,6 @@
 import HomeHeader from "@/components/my-components/HomeHeader";
 import PostCard from "@/components/my-components/PostCard";
 import { Article } from "@/lib/zod";
-import { useSession } from "next-auth/react";
 import type { getMetaDataType } from "./page";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useCallback, useState } from "react";
@@ -15,8 +14,7 @@ const Home = ({
   articles: Article[];
   metaData: getMetaDataType;
 }) => {
-  const { data: session } = useSession();
-  const [postNum, setPostNum] = useState(3);
+  const [postNum, setPostNum] = useState(50);
   const [infiniteArticles, setInfiniteArticles] = useState<Article[]>([
     ...articles,
   ]);

@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
     const articles = await prisma.article.findMany({
       where: {
         isPublished: true,
-        id:{gte:skip}
+        id: { gte: skip },
       },
       select: {
         id: true,
@@ -37,7 +37,7 @@ export async function GET(req: NextRequest) {
           },
         },
       },
-      take:take
+      take: take,
     });
     return NextResponse.json({ articles }, { status: 200 });
   } catch (error) {

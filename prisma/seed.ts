@@ -1,4 +1,4 @@
-// const { bcrypt } = require("@bcrypt");
+const bcrypt = require("bcryptjs");
 // import { PrismaClient } from "@prisma/client";
 const { PrismaClient } = require("@prisma/client");
 const { fakerEN_US } = require("@faker-js/faker");
@@ -17,11 +17,11 @@ const faker = fakerEN_US;
 
 async function main() {
   try {
-    const fakeUsers = generateFakeUsers(userCount, Role.AUTHOR);
+    const fakeUsers = await generateFakeUsers(userCount, Role.AUTHOR);
     const testUser = {
       name: "Issam Boubcher",
       email: "test@gmail.com",
-      password: "123123123",
+      password: await bcrypt.hash("123123123", 10),
       role: Role.AUTHOR,
     };
     // const fakeAdmin = generateFakeUsers(1, Role.ADMIN);
@@ -95,16 +95,20 @@ async function main() {
 }
 main();
 
-function generateFakeUsers(count: number, role: Role) {
-  return [...Array(count)].map(() => {
-    // const password = bcrypt.hash(faker.internet.password(), 10);
-    return {
-      name: faker.person.fullName(),
-      email: faker.internet.email(),
-      password: faker.internet.password(),
-      role: role,
-    };
-  });
+async function generateFakeUsers(count: number, role: Role) {
+  return await Promise.all(
+    [...Array(count)].map(async () => {
+      const password = await bcrypt.hash(faker.internet.password(), 10);
+
+      const user = {
+        name: faker.person.fullName(),
+        email: faker.internet.email(),
+        password: password,
+        role: role,
+      };
+      return user;
+    })
+  );
 }
 
 function generateContent(minSentences: number, maxSentences: number) {

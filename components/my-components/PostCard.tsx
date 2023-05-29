@@ -25,15 +25,15 @@ const PostCard = memo(function PostCard({ article }: { article: Article }) {
                         {article.author.name}
                       </span>
                     </div>
-                    {/* <span className="mx-2 ">·</span>
+                    {/* <span className="mx-2 ">|</span>
                     <span className="">
                       {getPrettyDateWithFullYear(article.createdAt)}
                     </span> */}
-                    <span className="mx-2 ">·</span>
+                    <span className="mx-2 ">|</span>
                     <span className="">
                       {Math.ceil(article.content.length / 200)} min read
                     </span>
-                    <span className="mx-2">·</span>
+                    <span className="mx-2">|</span>
                     <div className="flex items-center text-center text-sm font-semibold text-[#a48595]">
                       <span className="rounded-3xl border-[0.1rem] border-[#92687e] px-2 transition-colors duration-500 ease-in-out group-hover:text-[#92687e]">
                         {article.category.name}

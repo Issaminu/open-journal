@@ -37,7 +37,7 @@ const getMetaData = async () => {
     orderBy: { createdAt: "desc" },
     select: { createdAt: true },
   });
-  return { articleCount, userCount, latestAddition: latestAddition };
+  return { articleCount, userCount, latestAddition };
 };
 export type getMetaDataType = Awaited<ReturnType<typeof getMetaData>>;
 

@@ -1,6 +1,6 @@
 "use client";
 import { useSession, signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useRef } from "react";
@@ -20,6 +20,7 @@ export default function Login() {
   const loadingBarRef = useRef<LoadingBarRef>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+  const searchParams = useSearchParams();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
@@ -43,7 +44,9 @@ export default function Login() {
         }
         setIsValid(false);
       } else {
-        router.push("/home");
+        const callbackUrl = searchParams.get("callbackUrl");
+        if (callbackUrl) router.push(callbackUrl);
+        else router.push("/home");
       }
     }
   };

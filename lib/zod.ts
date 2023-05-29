@@ -64,3 +64,13 @@ export const categorySchema = z.object({
 });
 export const categorySchemaCreate = categorySchema.omit({ id: true });
 export const categorySchemaUpdate = categorySchema;
+
+const commentSchemaGlobal = commentSchema
+  .omit({
+    articleId: true,
+  })
+  .extend({
+    author: z.object({ id: z.number(), name: z.string() }),
+    updatedAt: z.date(),
+  });
+export type Comment = z.infer<typeof commentSchemaGlobal>;

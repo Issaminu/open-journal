@@ -1,4 +1,3 @@
-import { Card } from "@/components/ui/card";
 import { ArticleType } from "./page";
 import FullArticle from "@/components/my-components/FullArticle";
 const Article = ({ article }: { article: ArticleType }) => {
