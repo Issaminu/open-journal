@@ -1,7 +1,7 @@
 import { CustomError, isCustomError } from "@/lib/utils";
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma/prisma";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { userSchemaCreate } from "@/lib/zod";
 import { ZodError } from "zod";
 import { userSchemaUpdate } from "../../../lib/zod";
