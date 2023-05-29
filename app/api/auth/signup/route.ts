@@ -1,5 +1,5 @@
 import prisma from "prisma/prisma";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { NextResponse, NextRequest } from "next/server";
 import { userSchemaCreate } from "@/lib/zod";
 import { CustomError, isCustomError } from "@/lib/utils";
