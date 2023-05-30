@@ -109,7 +109,7 @@ const Comment = ({
             )}
           </div>
           {!isEditComment && (
-            <span className="w-[20rem] md:w-[34rem] lg:w-[44rem] text-white whitespace-normal text-start">
+            <span className="w-[20rem] md:w-[34rem] xl:w-[62rem] text-white whitespace-normal text-start">
               {comment.content}
             </span>
           )}
