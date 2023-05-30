@@ -38,19 +38,19 @@ async function getArticleById(articleId: number) {
               name: true,
             },
           },
-          updatedAt: true,
+          createdAt: true,
         },
       },
     },
   });
   if (!article) return null;
   article.comments.sort(
-    (a, b) => b.updatedAt.getTime() - a.updatedAt.getTime()
+    (a, b) => b.createdAt.getTime() - a.createdAt.getTime()
   );
   return article;
 }
 
-// Commented out `generateStaticParams` because of a Next.js with Server Actions, @see: https://github.com/vercel/next.js/issues/49408
+// Commented out `generateStaticParams` temporarily because of a Next.js with Server Actions, @see: https://github.com/vercel/next.js/issues/49408
 
 // export async function generateStaticParams() {
 //   const articles = await prisma.article.findMany({

@@ -15,6 +15,7 @@
     "seed": "ts-node prisma/seed.ts"
   },
   "dependencies": {
+    "@iconscout/react-unicons": "^2.0.2",
     "@next-auth/prisma-adapter": "^1.0.6",
     "@prisma/client": "^4.14.1",
     "@radix-ui/react-accordion": "^1.1.1",

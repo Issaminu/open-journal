@@ -42,8 +42,8 @@ const FullArticle = ({ article }: { article: ArticleType }) => {
   }, [article.id, categoryColor]);
 
   return (
-    <div className="full-article my-10 flex items-center justify-center">
-      <div className="mx-auto min-h-full bg-opacity-0 px-6 py-8 text-center lg:max-w-[80rem]">
+    <div className="full-article my-10 flex mx-auto items-center justify-center">
+      <div className="mx-auto min-h-full bg-opacity-0 px-6 py-8 text-center">
         <div className="flex flex-col items-center justify-center">
           <div className="mx-8 mb-12 mt-2 flex w-fit flex-col items-center justify-center gap-2 truncate text-[#92687e]">
             <span
@@ -55,7 +55,7 @@ const FullArticle = ({ article }: { article: ArticleType }) => {
               className="mb-3 max-w-[80rem] break-all"
               style={{ wordWrap: "break-word" }}
             >
-              <h1 className="break-all text-center text-5xl font-bold text-[#f1e5e5]">
+              <h1 className="break-all line-height-4 flex-nowrap whitespace-normal text-center text-5xl font-bold text-[#f1e5e5]">
                 {article.title}
               </h1>
             </div>
@@ -97,7 +97,7 @@ const FullArticle = ({ article }: { article: ArticleType }) => {
           />
         </div>
         <div className="mt-8 flex flex-col items-center justify-center px-4">
-          <article className="line-height-4 prose prose-neutral whitespace-normal text-justify  text-lg text-[#F0D4DA] lg:prose-xl prose-h1:text-[#cfc5c2] ">
+          <article className="line-height-4 prose prose-neutral whitespace-normal text-justify text-lg text-[#F0D4DA] lg:prose-xl prose-h1:text-[#cfc5c2] ">
             <div dangerouslySetInnerHTML={{ __html: article.content }} />
           </article>
           <Comments comments={article.comments} article={article} />

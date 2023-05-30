@@ -71,6 +71,6 @@ const commentSchemaGlobal = commentSchema
   })
   .extend({
     author: z.object({ id: z.number(), name: z.string() }),
-    updatedAt: z.date(),
+    createdAt: z.date(),
   });
 export type Comment = z.infer<typeof commentSchemaGlobal>;
