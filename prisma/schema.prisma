@@ -46,7 +46,7 @@ model Article {
 
 model Category {
   id        Int       @id @default(autoincrement())
-  name      String
+  name      String    @unique
   Article   Article[]
   author    User      @relation(fields: [authorId], references: [id])
   authorId  Int

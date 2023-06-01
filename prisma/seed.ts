@@ -212,8 +212,13 @@ function generateFakeCategories(
   minAuthorId: number,
   maxAuthorId: number
 ) {
-  return [...Array(count)].map(() => {
-    const name = faker.word.noun();
+  let uniqueNouns = new Set<string>();
+  while (uniqueNouns.size < count) {
+    uniqueNouns.add(faker.word.noun());
+  }
+  const nouns = Array.from(uniqueNouns); // Generating unique category names
+  return [...Array(count)].map((_, i) => {
+    const name = nouns[i];
     return {
       name: name.charAt(0).toUpperCase() + name.slice(1),
       authorId: faker.number.int({ min: minAuthorId, max: maxAuthorId }),

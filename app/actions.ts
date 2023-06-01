@@ -9,7 +9,6 @@ export const createComment = async (formData: FormData) => {
     const articleId = formData.get("articleId") as unknown as string | null;
     const userId = formData.get("userId") as unknown as string | null;
     if (!comment || !articleId || !userId) return;
-    console.log("comment", comment, "articleId", articleId, "userId", userId);
     await prisma.comment.create({
       data: {
         articleId: parseInt(articleId),
@@ -43,7 +42,6 @@ export const editComment = async (
   content?: string
 ) => {
   const session = await getServerSession();
-  console.log(session);
 
   if (!session || !content) return;
   try {
@@ -55,6 +53,48 @@ export const editComment = async (
       },
       data: {
         content: content,
+      },
+    });
+    revalidatePath(`/read/${articleId}`);
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const editArticle = async (
+  articleId: number,
+  title: string,
+  content: string,
+  categoryName: string
+) => {
+  console.log("welcome!");
+
+  const session = await getServerSession();
+  if (!session || !content || !categoryName) return;
+  // console.log(`${articleId} ${title}  ${categoryName}`);
+
+  try {
+    const category = await prisma.category.upsert({
+      where: {
+        name: categoryName,
+      },
+      create: {
+        name: categoryName,
+        authorId: session.user.id,
+      },
+      update: {},
+    });
+
+    // Using `UpdateMany` instead of `update` because Prisma sucks. @see: https://github.com/prisma/prisma/discussions/4185
+    await prisma.article.updateMany({
+      where: {
+        id: articleId,
+        // authorId: session.user.id,
+      },
+      data: {
+        title: title,
+        content: content,
+        categoryId: category.id,
       },
     });
     revalidatePath(`/read/${articleId}`);

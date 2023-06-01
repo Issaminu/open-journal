@@ -79,3 +79,10 @@
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
+
+.RichTextEditorControlsGroup > * {
+  color: white;
+}
+.RichTextEditorControlsGroup > *:hover {
+  color: black;
+}

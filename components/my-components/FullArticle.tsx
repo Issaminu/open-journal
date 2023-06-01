@@ -1,9 +1,12 @@
 "use client";
 import { ArticleType } from "@/app/read/[articleId]/page";
 import Comments from "@/components/my-components/Comments";
+import RichTextEditorContainer from "@/components/my-components/RichTextEditor";
+import { Button } from "@/components/ui/button";
 import { getPrettyDateWithFullYear } from "@/lib/utils";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useTransition, useEffect, useRef, useState } from "react";
+import { editArticle } from "@/app/actions";
 
 export const getRandomTailwindTextColor = () => {
   const colors = [
@@ -20,6 +23,23 @@ export const getRandomTailwindTextColor = () => {
 
 const FullArticle = ({ article }: { article: ArticleType }) => {
   const [categoryColor, setCategoryColor] = useState<string>();
+  const [isEdit, setIsEdit] = useState<boolean>(false);
+  let [isPending, startTransition] = useTransition();
+  const editorRef = useRef(article.content);
+  const saveEdit = async () => {
+    article.content = editorRef.current;
+
+    setIsEdit(false);
+    await startTransition(
+      async () =>
+        await editArticle(
+          article.id,
+          article.title,
+          article.content,
+          article.category.name
+        )
+    );
+  };
   useEffect(() => {
     // The following useEffect handles getting the category color from localStorage if it exists,
     // Otherwise, it generates the color and then saves it in localStorage for future use.
@@ -42,7 +62,7 @@ const FullArticle = ({ article }: { article: ArticleType }) => {
   }, [article.id, categoryColor]);
 
   return (
-    <div className="full-article my-10 flex mx-auto items-center justify-center">
+    <div className="my-10 flex mx-auto items-center justify-center">
       <div className="mx-auto min-h-full bg-opacity-0 px-6 py-8 text-center">
         <div className="flex flex-col items-center justify-center">
           <div className="mx-8 mb-12 mt-2 flex w-fit flex-col items-center justify-center gap-2 truncate text-[#92687e]">
@@ -97,9 +117,22 @@ const FullArticle = ({ article }: { article: ArticleType }) => {
           />
         </div>
         <div className="mt-8 flex flex-col items-center justify-center px-4">
-          <article className="line-height-4 prose prose-neutral whitespace-normal text-justify text-lg text-[#F0D4DA] lg:prose-xl prose-h1:text-[#cfc5c2] ">
-            <div dangerouslySetInnerHTML={{ __html: article.content }} />
-          </article>
+          <Button onClick={() => setIsEdit(!isEdit)} className="mb-4">
+            Edit
+          </Button>
+          {isEdit ? (
+            <div className="mx-auto max-w-[70rem]">
+              <RichTextEditorContainer
+                content={article.content}
+                editorRef={editorRef}
+                saveFunction={saveEdit}
+              />
+            </div>
+          ) : (
+            <article className="line-height-4 prose prose-neutral whitespace-normal text-justify text-lg text-[#F0D4DA] lg:prose-xl prose-h1:text-[#cfc5c2] ">
+              <div dangerouslySetInnerHTML={{ __html: article.content }} />
+            </article>
+          )}
           <Comments comments={article.comments} article={article} />
         </div>
       </div>
