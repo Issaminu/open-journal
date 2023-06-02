@@ -27,7 +27,7 @@ const Comments = ({
   };
 
   return (
-    <div className="mt-24 w-full">
+    <div className="mt-24 w-full max-w-[60rem]">
       <div className="flex flex-row justify-between">
         <h1 className="text-3xl font-bold text-[#f1e5e5] text-left">
           Comments ({comments.length})
