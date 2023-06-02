@@ -17,7 +17,7 @@ export const createComment = async (formData: FormData) => {
       },
     });
     revalidatePath(`/read/${articleId}`);
-    return true;
+    revalidatePath("/home");
   } catch (e) {
     console.error(e);
   }
@@ -31,6 +31,7 @@ export const deleteComment = async (commentId: number, articleId: number) => {
       },
     });
     revalidatePath(`/read/${articleId}`);
+    revalidatePath("/home");
   } catch (e) {
     console.error(e);
   }
@@ -56,6 +57,7 @@ export const editComment = async (
       },
     });
     revalidatePath(`/read/${articleId}`);
+    revalidatePath("/home");
   } catch (e) {
     console.error(e);
   }
@@ -67,11 +69,8 @@ export const editArticle = async (
   content: string,
   categoryName: string
 ) => {
-  console.log("welcome!");
-
   const session = await getServerSession();
   if (!session || !content || !categoryName) return;
-  // console.log(`${articleId} ${title}  ${categoryName}`);
 
   try {
     const category = await prisma.category.upsert({
@@ -98,6 +97,62 @@ export const editArticle = async (
       },
     });
     revalidatePath(`/read/${articleId}`);
+    revalidatePath("/home");
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const deleteArticle = async (articleId: number) => {
+  const session = await getServerSession();
+  if (!session) return;
+
+  try {
+    await prisma.article.deleteMany({
+      where: {
+        id: articleId,
+        authorId: session.user.id,
+      },
+    });
+    revalidatePath("/home");
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const createArticle = async (
+  title: string,
+  content: string,
+  categoryName: string
+) => {
+  const session = await getServerSession();
+  if (!session || !content || !categoryName) return;
+  try {
+    const category = await prisma.category.upsert({
+      where: {
+        name: categoryName,
+      },
+      create: {
+        name: categoryName,
+        authorId: session.user.id,
+      },
+      update: {},
+    });
+
+    const article = await prisma.article.create({
+      data: {
+        title: title,
+        content: content,
+        authorId: session.user.id,
+        isPublished: true,
+        categoryId: category.id,
+        image: `https://picsum.photos/1024/600?fakeSearchParam=${Math.floor(
+          Math.random() * 1000
+        )}`, // TODO: Set up image upload
+      },
+    });
+
+    revalidatePath("/home");
   } catch (e) {
     console.error(e);
   }

@@ -26,6 +26,7 @@ const getArticles = async (numberOfArticles: number): Promise<Article[]> => {
         },
       },
     },
+    orderBy: { id: "desc" },
     take: numberOfArticles,
   })) as Article[];
 };

@@ -27,7 +27,7 @@ const Comment = ({
   articleId: number;
 }) => {
   const { data: session } = useSession();
-  const [isPending, startTransition] = useTransition();
+  const [_isPending, startTransition] = useTransition();
   let [isEditComment, setIsEditComment] = useState<boolean>(false);
   const editCommentRef = useRef<HTMLTextAreaElement>(null);
   useEffect(() => {

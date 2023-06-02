@@ -58,7 +58,7 @@ const PostCard = memo(function PostCard({ article }: { article: Article }) {
                   <p
                     className={`line-height-4 line-clamp-4 whitespace-normal text-justify font-hubot text-lg text-[#9e9896] transition duration-200 ease-in-out group-hover:text-white`}
                   >
-                    {article.content}
+                    {article.content.replace(/<[^>]*>/g, "")}
                   </p>
                 </div>
               </div>
