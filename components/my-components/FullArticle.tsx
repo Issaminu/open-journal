@@ -8,7 +8,7 @@ import Image from "next/image";
 import { useTransition, useEffect, useRef, useState } from "react";
 import { editArticle } from "@/app/actions";
 
-export const getRandomTailwindTextColor = () => {
+const getRandomTailwindTextColor = () => {
   const colors = [
     "text-red-500",
     "text-yellow-500",
@@ -72,7 +72,7 @@ const FullArticle = ({ article }: { article: ArticleType }) => {
               {article.category.name}
             </span>
             <div
-              className="mb-3 max-w-[80rem] break-all"
+              className="mb-3 max-w-[55rem] break-all"
               style={{ wordWrap: "break-word" }}
             >
               <h1 className="break-all line-height-4 flex-nowrap whitespace-normal text-center text-5xl font-bold text-[#f1e5e5]">

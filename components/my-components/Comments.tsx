@@ -37,7 +37,7 @@ const Comments = ({
           className="bg-[#e24646] hover:bg-[#EE5C5C] active:bg-[#ee6868] text-white"
           onClick={() => setIsAddComment(!isAddComment)}
         >
-          + Add Comment
+          + Comment
         </Button>
       </div>
       {isAddComment && !session && (
