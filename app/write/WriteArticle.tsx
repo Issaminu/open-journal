@@ -30,17 +30,9 @@ const WriteArticle = () => {
     );
     router.push("/read/latest");
   };
-  const handleKeyDownTitle = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    // This function prevents the user from being able to make a new line in the title.
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    // This function prevents the user from being able to make a new line in the title or category.
     if (event.key === "Enter") {
-      event.preventDefault();
-    }
-  };
-  const handleKeyDownCategory = (
-    event: React.KeyboardEvent<HTMLDivElement>
-  ) => {
-    // This function prevents the user from being able to make a new line or a space in the category.
-    if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
     }
   };
@@ -67,7 +59,7 @@ const WriteArticle = () => {
                     ref={titleRef}
                     type="text"
                     name="title"
-                    onKeyDown={handleKeyDownTitle}
+                    onKeyDown={handleKeyDown}
                     className="bg-black/20 border-black/20 border-4 text-[#f1ebeb] outline-black"
                   />
                 </div>
@@ -79,7 +71,7 @@ const WriteArticle = () => {
                     ref={categoryRef}
                     type="text"
                     name="categorie"
-                    onKeyDown={handleKeyDownCategory}
+                    onKeyDown={handleKeyDown}
                     className="bg-black/20 border-black/20 border-4 text-[#f1ebeb] outline-black"
                   />
                 </div>

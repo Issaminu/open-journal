@@ -41,8 +41,6 @@ const RichTextEditorContainer = ({
       }}
     >
       <RichTextEditor.Toolbar
-        sticky
-        stickyOffset={60}
         style={{
           backgroundColor: "rgb(0 0 0/0.2)",
           color: "white",
@@ -90,10 +88,11 @@ const RichTextEditorContainer = ({
 
       <RichTextEditor.Content
         style={{
+          backgroundColor: "rgb(0 0 0/0.4)",
           textAlign: "left",
-          backgroundColor: "transparent",
           lineHeight: "2",
           color: "white",
+          borderRadius: "0rem",
           minHeight: "15rem",
         }}
       />

@@ -8,6 +8,8 @@ import Image from "next/image";
 import { useTransition, useEffect, useRef, useState } from "react";
 import { editArticle } from "@/app/actions";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
+import { UilArrowLeft } from "@iconscout/react-unicons";
 
 const getRandomTailwindTextColor = () => {
   const colors = [
@@ -78,7 +80,6 @@ const FullArticle = ({ article }: { article: ArticleType }) => {
       setCategoryColor(color);
     }
   }, [article.id, categoryColor]);
-
   return (
     <div className="my-10 flex mx-auto items-center justify-center">
       <div className="mx-auto min-h-full bg-opacity-0 px-6 py-8 text-center">
@@ -86,7 +87,7 @@ const FullArticle = ({ article }: { article: ArticleType }) => {
           <form>
             <div className="flex flex-col items-center justify-center">
               <div className="mx-8 mb-12 mt-2 flex w-full flex-col items-center justify-center gap-2 truncate text-[#92687e]">
-                <div className="flex flex-row justify-between w-full">
+                <div className="flex flex-row justify-center lg:justify-between w-full">
                   <Button
                     className="bg-cyan-600 w-20 font-semibold hover:bg-cyan-700 active:bg-cyan-800 px-4 py-2 rounded-lg text-white"
                     variant={"secondary"}
@@ -148,7 +149,7 @@ const FullArticle = ({ article }: { article: ArticleType }) => {
                 priority={true}
                 className="rounded-2xl shadow px-1 lg:px-0"
                 style={{
-                  transform: "translate3d(0, 0, 0)", // This supposedly makes rendering the image handled by the GPU, for better performance
+                  transform: "translate3d(0, 0, 0)",
                 }}
               />
             </div>
@@ -166,38 +167,39 @@ const FullArticle = ({ article }: { article: ArticleType }) => {
           <>
             <div className="flex flex-col items-center justify-center">
               <div className="mx-8 mb-12 mt-2 flex w-full flex-col items-center justify-center gap-2 truncate text-[#92687e]">
-                <div
-                  className={`flex flex-row justify-${
-                    article.author.id === session?.user.id
-                      ? "between"
-                      : "center"
-                  } items-center w-full`}
-                >
-                  {article.author.id === session?.user.id && (
-                    <Button className="ml-2 lg:ml-0 invisible">
-                      Edit Article
+                <div className="flex flex-row items-center w-full">
+                  <div className="flex flex-row justify-start items-center w-full">
+                    <Button
+                      asChild
+                      className="w-fit bg-transparent hover:bg-black/30 border-2 border-transparent hover:border-white/20"
+                    >
+                      <Link href="/home">
+                        <UilArrowLeft className="text-[#AC8A89]" />
+                      </Link>
                     </Button>
-                  )}
+                  </div>
                   <span
                     className={`w-fit text-sm font-semibold uppercase ${categoryColor}`}
                   >
                     {article.category.name}
                   </span>
-                  {article.author.id === session?.user.id && (
-                    <Button
-                      className="text-white mr-2 lg:mr-0"
-                      variant={"outline"}
-                      onClick={() => setIsEdit(true)}
-                    >
-                      Edit Article
-                    </Button>
-                  )}
+                  <div className="flex flex-row justify-end items-center w-full">
+                    {article.author.id === session?.user.id && (
+                      <Button
+                        className="text-white mr-2 lg:mr-0"
+                        variant={"outline"}
+                        onClick={() => setIsEdit(true)}
+                      >
+                        Edit Article
+                      </Button>
+                    )}
+                  </div>
                 </div>
                 <div
                   className="mb-3 max-w-[65rem] break-all"
                   style={{ wordWrap: "break-word" }}
                 >
-                  <h1 className="break-all line-height-4 flex-nowrap whitespace-normal text-center text-5xl font-bold text-[#f1e5e5]">
+                  <h1 className="break-all drop-shadow-2xl line-height-4 flex-nowrap whitespace-normal text-center text-5xl font-bold text-[#f1e5e5]">
                     {article.title}
                   </h1>
                 </div>
