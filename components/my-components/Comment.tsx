@@ -63,14 +63,17 @@ const Comment = ({
             {session && session.user.id === comment.author.id && (
               <>
                 <div className="flex flex-row gap-4">
-                  <button
-                    onClick={() => {
-                      setIsEditComment(true);
-                    }}
-                    className="hover:bg-gray-800/40 p-1 rounded-md active:bg-gray-800/80"
-                  >
-                    <UilEdit className="text-green-400" />
-                  </button>
+                  {!isEditComment && (
+                    <button
+                      onClick={() => {
+                        setIsEditComment(true);
+                      }}
+                      className="hover:bg-gray-800/40 p-1 rounded-md active:bg-gray-800/80"
+                    >
+                      <UilEdit className="text-green-400" />
+                    </button>
+                  )}
+
                   <AlertDialog>
                     <AlertDialogTrigger asChild>
                       <button className="hover:bg-gray-800/40 p-1 rounded-md active:bg-gray-800/80">
@@ -136,12 +139,13 @@ const Comment = ({
                     );
                     setIsEditComment(false);
                   }}
-                  className="bg-cyan-600 w-44 font-semibold hover:bg-cyan-700 active:bg-cyan-800 px-4 py-2 rounded-lg text-white"
+                  variant={"secondary"}
+                  className="bg-[#934f5c] w-44  hover:bg-[#7c3744] active:bg-[#612631] text-[#ebc6c6] px-4 py-2 rounded-lg"
                 >
                   Save
                 </Button>
                 <Button
-                  className="bg-gray-300 w-24 text-black hover:bg-gray-400 active:bg-gray-500"
+                  className="bg-transparent w-24 text-[#cc9b9c]  hover:bg-black/30  active:bg-black/40 "
                   onClick={() => setIsEditComment(false)}
                 >
                   Cancel

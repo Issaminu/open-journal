@@ -9,7 +9,7 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 
 const HomeHeader = ({ metaData }: { metaData: getMetaDataType }) => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const latestAddition = useMemo(
     () => getPrettyDate(metaData.latestAddition?.createdAt),
     [metaData.latestAddition?.createdAt]
@@ -32,22 +32,28 @@ const HomeHeader = ({ metaData }: { metaData: getMetaDataType }) => {
             <h1 className="text-4xl font-bold text-[#ecd7d7]">
               The ENSET Journal
             </h1>
-            <p className="pt-2 text-[#AC8A89]/70">
+            <p className="pt-2 text-[#cc9b9c]/80">
               {metaData.articleCount} articles · {metaData.userCount} students
               registered · Latest publication: {latestAddition}
             </p>
           </div>
         </div>
-        {session ? (
-          <Link href="/write">
-            <Button variant={"outline"} className="text-white">
-              Write an article
-            </Button>
-          </Link>
-        ) : (
-          <Button asChild>
-            <Link href="/login">Login</Link>
-          </Button>
+        {status !== "loading" && (
+          <div className="flex items-center">
+            {session ? (
+              <Link href="/write" className="h-fit">
+                <Button className="text-[#ecd7d7] bg-[#5d353b] hover:bg-[#73434A] active:bg-[#7c4c53]">
+                  Write an article
+                </Button>
+              </Link>
+            ) : (
+              <Link href="/login" className="h-fit">
+                <Button className="text-[#ecd7d7] bg-[#5d353b] hover:bg-[#73434A] active:bg-[#7c4c53]">
+                  Login
+                </Button>
+              </Link>
+            )}
+          </div>
         )}
       </div>
 

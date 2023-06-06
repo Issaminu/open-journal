@@ -47,7 +47,7 @@ const Home = ({
     <div
       className="h-full w-full overflow-x-hidden px-6 lg:px-8"
       style={{
-        background: "url('/background.png') no-repeat center center fixed",
+        background: "url('/gradient.png') no-repeat center center fixed",
         backgroundSize: "cover",
         minHeight: "100rem",
       }}

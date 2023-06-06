@@ -9,39 +9,10 @@ const quincyBlackItalic = localFont({
   display: "swap",
   variable: "--font-quincyBlackItalic",
 });
-const quincyBlack = localFont({
-  src: "../public/fonts/Quincy-Black.ttf",
-  display: "swap",
-  variable: "--font-quincyBlack",
-});
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
-});
-
-const lora = localFont({
-  src: "../public/fonts/Lora-Regular.ttf",
-  display: "swap",
-  variable: "--font-lora",
-});
-
-const tinos = Tinos({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-tinos",
-});
-
-const freight = localFont({
-  src: "../public/fonts/Freight-Regular.ttf",
-  display: "swap",
-  variable: "--font-freight",
-});
-
-const tiempo = localFont({
-  src: "../public/fonts/Tiempo-Regular.otf",
-  display: "swap",
-  variable: "--font-tiempo",
 });
 
 const hubot = localFont({
@@ -62,7 +33,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.className} ${quincyBlackItalic.variable} ${quincyBlack.variable} ${lora.variable} ${tinos.variable} ${freight.variable} ${tiempo.variable} ${hubot.variable}`}
+      className={`${inter.className} ${quincyBlackItalic.variable} ${hubot.variable}`}
     >
       <head>
         <meta charSet="utf-8" />

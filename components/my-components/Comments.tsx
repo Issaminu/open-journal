@@ -4,7 +4,7 @@ import Comment from "@/components/my-components/Comment";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { createComment } from "@/app/actions";
+import { createComment } from "@/app/actions"; // Importing a Server Action
 import type { Comment as CommentType } from "@/lib/zod";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
@@ -34,7 +34,7 @@ const Comments = ({
         </h1>
         <Button
           variant={"secondary"}
-          className="bg-[#e24646] hover:bg-[#EE5C5C] active:bg-[#ee6868] text-white"
+          className="bg-[#cc9b9c] hover:bg-[#4b292f] active:bg-[#532a30] text-[#4b292f] hover:text-[#cc9b9c]"
           onClick={() => setIsAddComment(!isAddComment)}
         >
           + Comment
@@ -95,12 +95,12 @@ const Comments = ({
                   <Button
                     variant={"secondary"}
                     type="submit"
-                    className="bg-cyan-600 w-44 font-semibold hover:bg-cyan-700 active:bg-cyan-800 px-4 py-2 rounded-lg text-white"
+                    className="bg-[#934f5c] w-44  hover:bg-[#7c3744] active:bg-[#612631] text-[#ebc6c6] px-4 py-2 rounded-lg"
                   >
                     Send
                   </Button>
                   <Button
-                    className="bg-gray-300 w-24 text-black hover:bg-gray-400 active:bg-gray-500"
+                    className="bg-transparent w-24 text-[#cc9b9c]  hover:bg-black/30  active:bg-black/40 "
                     onClick={() => setIsAddComment(false)}
                   >
                     Cancel

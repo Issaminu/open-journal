@@ -1,9 +1,9 @@
-import WriteArticle from "@/app/write/WriteArticle";
+import Write from "@/app/write/Write";
 
 const page = () => {
   return (
     <div>
-      <WriteArticle />
+      <Write />
     </div>
   );
 };

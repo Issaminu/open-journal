@@ -27,5 +27,5 @@ export default withAuth(
 
 export const config = {
   matcher:
-    "/((?!api|_next/static|_next/image|background|favicon.ico|articles|categories|comments|users).*)", // Matches all routes except api routes (Route Handlers), static files, and image files
+    "/((?!api|_next/static|_next/image|gradient|favicon.ico|articles|categories|comments|users).*)", // Matches all routes except api routes (Route Handlers), static files, and image files
 };

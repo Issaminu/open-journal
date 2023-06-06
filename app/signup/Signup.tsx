@@ -199,6 +199,8 @@ export default function Singup() {
                   <Button
                     variant="outline"
                     className="h-12 w-full rounded-lg border-gray-400 bg-white hover:bg-gray-200"
+                    disabled
+                    title="Coming soon"
                   >
                     <span className="flex w-full items-center justify-evenly">
                       <GoogleIcon />
@@ -211,6 +213,8 @@ export default function Singup() {
                   <Button
                     variant="outline"
                     className="h-12 w-full rounded-lg border-gray-400 bg-white hover:bg-gray-200"
+                    disabled
+                    title="Coming soon"
                   >
                     <span className="flex w-full items-center justify-evenly">
                       <GithubIcon />

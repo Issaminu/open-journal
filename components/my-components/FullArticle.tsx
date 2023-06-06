@@ -10,16 +10,17 @@ import { editArticle } from "@/app/actions";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { UilArrowLeft } from "@iconscout/react-unicons";
+import { motion } from "framer-motion";
 
 const getRandomTailwindTextColor = () => {
   const colors = [
-    "text-red-500",
-    "text-yellow-500",
-    "text-green-500",
-    "text-blue-500",
-    "text-indigo-500",
-    "text-purple-500",
-    "text-pink-500",
+    "text-red-400",
+    "text-yellow-400",
+    "text-green-400",
+    "text-blue-400",
+    "text-indigo-400",
+    "text-purple-400",
+    "text-pink-400",
   ];
   return colors[Math.floor(Math.random() * colors.length)];
 };
@@ -89,8 +90,7 @@ const FullArticle = ({ article }: { article: ArticleType }) => {
               <div className="mx-8 mb-12 mt-2 flex w-full flex-col items-center justify-center gap-2 truncate text-[#92687e]">
                 <div className="flex flex-row justify-center lg:justify-between w-full">
                   <Button
-                    className="bg-cyan-600 w-20 font-semibold hover:bg-cyan-700 active:bg-cyan-800 px-4 py-2 rounded-lg text-white"
-                    variant={"secondary"}
+                    className="bg-[#934f5c] hover:bg-[#7c3744] active:bg-[#612631] text-[#ebc6c6]"
                     onClick={saveEdit}
                   >
                     Save Edit
@@ -105,8 +105,7 @@ const FullArticle = ({ article }: { article: ArticleType }) => {
                     className={`w-fit text-sm bg-transparent text-center decoration-green-300 outline-none font-semibold underline decoration-4 uppercase ${categoryColor}`}
                   />
                   <Button
-                    className="text-white text-sm w-20"
-                    variant={"outline"}
+                    className="bg-transparent w-24 text-[#cc9b9c]  hover:bg-black/30  active:bg-black/40 "
                     onClick={() => setIsEdit(false)}
                   >
                     Cancel
@@ -164,9 +163,9 @@ const FullArticle = ({ article }: { article: ArticleType }) => {
             </div>
           </form>
         ) : (
-          <>
+          <motion.div layoutId={`${article.id}-card`}>
             <div className="flex flex-col items-center justify-center">
-              <div className="mx-8 mb-12 mt-2 flex w-full flex-col items-center justify-center gap-2 truncate text-[#92687e]">
+              <div className="mx-8 mb-12 mt-2 flex w-full flex-col items-center justify-center gap-2 truncate text-[#cc9b9c]">
                 <div className="flex flex-row items-center w-full">
                   <div className="flex flex-row justify-start items-center w-full">
                     <Button
@@ -178,16 +177,21 @@ const FullArticle = ({ article }: { article: ArticleType }) => {
                       </Link>
                     </Button>
                   </div>
-                  <span
-                    className={`w-fit text-sm font-semibold uppercase ${categoryColor}`}
+                  <motion.span
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{
+                      type: "spring",
+                      damping: 20,
+                    }}
+                    className={`w-fit  text-sm font-semibold uppercase ${categoryColor}`}
                   >
                     {article.category.name}
-                  </span>
+                  </motion.span>
                   <div className="flex flex-row justify-end items-center w-full">
                     {article.author.id === session?.user.id && (
                       <Button
-                        className="text-white mr-2 lg:mr-0"
-                        variant={"outline"}
+                        className="text-[#ecd7d7] bg-[#5d353b] hover:bg-[#73434A] active:bg-[#7c4c53]"
                         onClick={() => setIsEdit(true)}
                       >
                         Edit Article
@@ -199,11 +203,26 @@ const FullArticle = ({ article }: { article: ArticleType }) => {
                   className="mb-3 max-w-[65rem] break-all"
                   style={{ wordWrap: "break-word" }}
                 >
-                  <h1 className="break-all drop-shadow-2xl line-height-4 flex-nowrap whitespace-normal text-center text-5xl font-bold text-[#f1e5e5]">
+                  <motion.h1
+                    layoutId={`${article.id}-title`}
+                    transition={{
+                      type: "spring",
+                      damping: 20,
+                    }}
+                    className="break-all drop-shadow-2xl line-height-4 flex-nowrap whitespace-normal text-center text-5xl font-bold text-[#f1e5e5]"
+                  >
                     {article.title}
-                  </h1>
+                  </motion.h1>
                 </div>
-                <div className="flex flex-row justify-center">
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{
+                    type: "spring",
+                    damping: 20,
+                  }}
+                  className="flex flex-row justify-center"
+                >
                   <span className="truncate font-bold">
                     {article.author.name}
                   </span>
@@ -215,10 +234,17 @@ const FullArticle = ({ article }: { article: ArticleType }) => {
                   <span className="">
                     {Math.ceil(article.content.length / 200)} min read
                   </span>
-                </div>
+                </motion.div>
               </div>
             </div>
-            <div className="mx-auto flex flex-col items-center justify-center lg:mx-0">
+            <motion.div
+              layoutId={`${article.id}-image`}
+              transition={{
+                type: "spring",
+                damping: 20,
+              }}
+              className="mx-auto flex flex-col items-center justify-center lg:mx-0"
+            >
               <Image
                 src={article.image}
                 width={1024}
@@ -231,14 +257,21 @@ const FullArticle = ({ article }: { article: ArticleType }) => {
                   transform: "translate3d(0, 0, 0)",
                 }}
               />
-            </div>
+            </motion.div>
             <div className="mt-8 flex flex-col items-center justify-center px-4">
               <article className="line-height-4 prose prose-neutral whitespace-normal text-justify text-lg text-[#F0D4DA] lg:prose-xl prose-h1:text-[#ffffff] prose-h1:mb-4 prose-h2:mt-2 prose-h2:text-[#e1d5d2] prose-h3:text-[#ebe2e0] prose-h4:text-[#f0e6e2]">
-                <div dangerouslySetInnerHTML={{ __html: article.content }} />
+                <motion.div
+                  layoutId={`${article.id}-content`}
+                  transition={{
+                    type: "spring",
+                    damping: 20,
+                  }}
+                  dangerouslySetInnerHTML={{ __html: article.content }}
+                />
               </article>
               <Comments comments={article.comments} article={article} />
             </div>
-          </>
+          </motion.div>
         )}
       </div>
     </div>

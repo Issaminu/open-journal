@@ -56,12 +56,6 @@ module.exports = {
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
         articleTitle: ["var(--font-quincyBlackItalic)"],
-        quincyBlack: ["var(--font-quincyBlack)"],
-        articleBody: ["var(--font-lora)"],
-        loraBold: ["var(--font-lora)"],
-        tinos: ["var(--font-tinos)"],
-        tiempo: ["var(--font-tiempo)"],
-        freight: ["var(--font-freight)"],
         hubot: ["var(--font-hubot)"],
       },
       keyframes: {
