@@ -87,7 +87,7 @@ const FullArticle = ({ article }: { article: ArticleType }) => {
         {isEdit && article.author.id === session?.user.id ? (
           <form>
             <div className="flex flex-col items-center justify-center">
-              <div className="mx-8 mb-12 mt-2 flex w-full flex-col items-center justify-center gap-2 truncate text-[#92687e]">
+              <div className="mx-8 mb-12 mt-2 flex w-full flex-col items-center justify-center gap-2 truncate text-[#cc9b9c]">
                 <div className="flex flex-row justify-center lg:justify-between w-full">
                   <Button
                     className="bg-[#934f5c] hover:bg-[#7c3744] active:bg-[#612631] text-[#ebc6c6]"

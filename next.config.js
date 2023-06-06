@@ -4,7 +4,6 @@ const nextConfig = {
   swcMinify: true,
   experimental: {
     serverActions: true,
-    scrollRestoration: true,
   },
   images: {
     domains: [

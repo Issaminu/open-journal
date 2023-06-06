@@ -43,6 +43,7 @@ const Write = () => {
         style={{
           background: "url('/gradient.png') no-repeat center center fixed",
           backgroundSize: "cover",
+          minHeight: "100rem",
         }}
       >
         <div className="my-10 bg-[#3c3a3a] flex flex-col px-12 py-6 bg-opacity-40 shadow-lg rounded-xl w-full sm:max-w-2xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl 2xl:max-w-6xl mx-auto">

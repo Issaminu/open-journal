@@ -88,7 +88,7 @@ const RichTextEditorContainer = ({
 
       <RichTextEditor.Content
         style={{
-          backgroundColor: "rgb(0 0 0/0.4)",
+          backgroundColor: "rgb(0 0 0/0.1)",
           textAlign: "left",
           lineHeight: "2",
           color: "white",

@@ -97,7 +97,7 @@ const Comment = ({
                               deleteComment(comment.id, articleId);
                             });
                           }}
-                          className="bg-red-600 hover:bg-red-700 mb-6 font-bold active:bg-red-800"
+                          className="bg-red-600 hover:bg-red-700  font-bold active:bg-red-800"
                         >
                           Continue
                         </AlertDialogAction>
