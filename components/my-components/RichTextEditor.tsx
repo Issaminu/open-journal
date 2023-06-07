@@ -59,7 +59,6 @@ const RichTextEditorContainer = ({
           <RichTextEditor.Italic />
           <RichTextEditor.Underline />
           <RichTextEditor.Strikethrough />
-          <RichTextEditor.ClearFormatting />
           <RichTextEditor.Highlight />
           <RichTextEditor.Code />
         </RichTextEditor.ControlsGroup>

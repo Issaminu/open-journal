@@ -259,7 +259,7 @@ const FullArticle = ({ article }: { article: ArticleType }) => {
               />
             </motion.div>
             <div className="mt-8 flex flex-col items-center justify-center px-4">
-              <article className="line-height-4 prose prose-neutral whitespace-normal text-justify text-lg text-[#F0D4DA] lg:prose-xl prose-h1:text-[#ffffff] prose-h1:mb-4 prose-h2:mt-2 prose-h2:text-[#e1d5d2] prose-h3:text-[#ebe2e0] prose-h4:text-[#f0e6e2]">
+              <article className="line-height-4 prose prose-neutral whitespace-normal text-justify text-lg text-[#F0D4DA] lg:prose-xl prose-h1:text-[#ffffff] prose-code:text-[#cca1aa] prose-blockquote:text-[#cca1aa] prose-h1:mb-4 prose-strong:text-[#F0D4DA] prose-h2:mt-2 prose-h2:text-[#e1d5d2] prose-h3:text-[#ebe2e0] prose-h4:text-[#f0e6e2]">
                 <motion.div
                   layoutId={`${article.id}-content`}
                   transition={{
