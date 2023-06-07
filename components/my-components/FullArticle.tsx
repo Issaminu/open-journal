@@ -62,19 +62,19 @@ const FullArticle = ({ article }: { article: ArticleType }) => {
     );
   };
   useEffect(() => {
-    // This effect handles getting the category color from localStorage if it exists,
-    // Otherwise, it generates the color and then saves it in localStorage for future use.
+    // This effect handles getting the category color from sessionStorage if it exists,
+    // Otherwise, it generates the color and then saves it in sessionStorage for future use.
     // This negates the need to save the category color for each category in the database.
     // And also negates the generation of the color upon reload,
     // Meaning that the category color doesn't change on each reload.
-    const localStorageColor = localStorage.getItem(
+    const sessionStorageColor = sessionStorage.getItem(
       `article-${article.id.toString()}-categoryColor`
     );
-    if (localStorageColor) {
-      setCategoryColor(localStorageColor);
+    if (sessionStorageColor) {
+      setCategoryColor(sessionStorageColor);
     } else {
       const color = getRandomTailwindTextColor();
-      localStorage.setItem(
+      sessionStorage.setItem(
         `article-${article.id.toString()}-categoryColor`,
         color
       );
