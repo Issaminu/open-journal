@@ -33,7 +33,7 @@ const HomeHeader = ({ metaData }: { metaData: getMetaDataType }) => {
               The Open Journal
             </h1>
             <p className="pt-2 text-[#cc9b9c]/80">
-              {metaData.articleCount} articles · {metaData.userCount} students
+              {metaData.articleCount} articles · {metaData.userCount} users
               registered · Latest publication: {latestAddition}
             </p>
           </div>
@@ -58,10 +58,10 @@ const HomeHeader = ({ metaData }: { metaData: getMetaDataType }) => {
       </div>
 
       <p className="whitespace-wrap max-w-[50rem] pt-10 text-justify font-hubot text-lg text-[#EED3D3]">
-        The open blog of the Internet. The platform where anyone
-        can freely express themselves, offering a captivating virtual hub for
-        intellectual exploration and thought-provoking articles, personal
-        narratives, cutting-edge research, and engaging discussions.
+        The open blog of the Internet. The platform where anyone can freely
+        express themselves, offering a captivating virtual hub for intellectual
+        exploration and thought-provoking articles, personal narratives,
+        cutting-edge research, and engaging discussions.
       </p>
     </div>
   );
