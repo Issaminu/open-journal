@@ -50,19 +50,21 @@ async function getArticleById(articleId: number) {
   return article;
 }
 
-export async function generateStaticParams() {
-  const articles = await prisma.article.findMany({
-    where: {
-      isPublished: true,
-    },
-    select: {
-      id: true,
-    },
-  });
-  return articles.map((article) => ({
-    articleId: article.id.toString(),
-  }));
-}
+// Commented out `generateStaticParams` temporarily because of a Next.js with Server Actions, @see: https://github.com/vercel/next.js/issues/49408
+
+// export async function generateStaticParams() {
+//   const articles = await prisma.article.findMany({
+//     where: {
+//       isPublished: true,
+//     },
+//     select: {
+//       id: true,
+//     },
+//   });
+//   return articles.map((article) => ({
+//     articleId: article.id.toString(),
+//   }));
+// }
 
 export type ArticleType = NonNullable<
   Awaited<ReturnType<typeof getArticleById>>
