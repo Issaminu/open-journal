@@ -17,7 +17,7 @@ const PostCard = memo(function PostCard({ article }: { article: Article }) {
           className="mx-4 my-4 w-fit"
         >
           <div className="w-fit">
-            <Card className="group items-center rounded-xl border-none bg-[#3c3a3a] bg-opacity-40 py-8 shadow-lg  drop-shadow-lg backdrop-blur-lg transition-all duration-300 ease-in-out hover:scale-105 hover:cursor-pointer hover:rounded-3xl hover:bg-[#2a262c] hover:shadow-2xl xl:w-[32rem]">
+            <Card className="group items-center rounded-xl border-none bg-[#3c3a3a] bg-opacity-40 py-8 shadow-lg backdrop-blur-lg transition-all duration-300 ease-in-out hover:scale-105 hover:cursor-pointer hover:rounded-3xl hover:bg-[#2a262c] hover:shadow-2xl xl:w-[32rem]">
               <div className="flex flex-col justify-between space-y-7">
                 <div className="px-6">
                   <div>
