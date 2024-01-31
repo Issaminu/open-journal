@@ -1,6 +1,6 @@
 # The Open Journal
 
-![thumbnail](https://raw.githubusercontent.com/Issaminu/open-jounal/main/open%20journal.png)
+![thumbnail](https://raw.githubusercontent.com/Issaminu/open-journal/main/open%20journal.png)
 
 ## Description
 
