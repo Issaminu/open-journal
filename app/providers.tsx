@@ -2,6 +2,7 @@
 
 import { Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
+import { MantineProvider } from "@mantine/core";
 
 function Providers({
   session,
@@ -10,7 +11,11 @@ function Providers({
   session: Session;
   children: React.ReactNode;
 }) {
-  return <SessionProvider session={session}>{children}</SessionProvider>;
+  return (
+    <SessionProvider session={session}>
+      <MantineProvider>{children}</MantineProvider>
+    </SessionProvider>
+  );
 }
 
 export default Providers;
