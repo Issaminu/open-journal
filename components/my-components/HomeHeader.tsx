@@ -6,10 +6,9 @@ import journalIcon from "../../public/journal-icon.png";
 import { getPrettyDate } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
+import HeaderActionButton from "./HeaderActionButton";
 
 const HomeHeader = ({ metaData }: { metaData: getMetaDataType }) => {
-  const { data: session, status } = useSession();
   const latestAddition = useMemo(
     () => getPrettyDate(metaData.latestAddition?.createdAt),
     [metaData.latestAddition?.createdAt]
@@ -38,23 +37,7 @@ const HomeHeader = ({ metaData }: { metaData: getMetaDataType }) => {
             </p>
           </div>
         </div>
-        {status !== "loading" && (
-          <div className="flex items-center">
-            {session ? (
-              <Link href="/write" className="h-fit">
-                <Button className="text-[#ecd7d7] bg-[#5d353b] hover:bg-[#73434A] active:bg-[#7c4c53]">
-                  Write an article
-                </Button>
-              </Link>
-            ) : (
-              <Link href="/login" className="h-fit">
-                <Button className="text-[#ecd7d7] bg-[#5d353b] hover:bg-[#73434A] active:bg-[#7c4c53]">
-                  Login
-                </Button>
-              </Link>
-            )}
-          </div>
-        )}
+        <HeaderActionButton />
       </div>
 
       <p className="whitespace-wrap max-w-[50rem] pt-10 text-justify font-hubot text-lg text-[#EED3D3]">

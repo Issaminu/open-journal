@@ -7,6 +7,8 @@ import type { getMetaDataType } from "./page";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useCallback, useState } from "react";
 import axios, { AxiosResponse } from "axios";
+import { For } from "million/react";
+
 const Home = ({
   articles,
   metaData,
@@ -15,9 +17,7 @@ const Home = ({
   metaData: getMetaDataType;
 }) => {
   const [postNum, setPostNum] = useState(50);
-  const [infiniteArticles, setInfiniteArticles] = useState<Article[]>([
-    ...articles,
-  ]);
+  const [infiniteArticles, setInfiniteArticles] = useState<Article[]>(articles);
   const fetchData = useCallback(
     async (numberOfPosts: number) => {
       console.log("fetching more data ...");
@@ -32,14 +32,25 @@ const Home = ({
             console.error(error);
           }
         )) as AxiosResponse;
+      let articles = infiniteArticles;
       let newArticles = res.data.articles as Article[]; // This is not exactly true, as article.createdAt fields are of type string, not Date.
 
+      function sendMessage(message: string) {
+        fetch("/api/send-message", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ message }),
+        });
+      }
       // When getting data from an API, Date objects automatically get stringified.
       // The following Array.map() turns them back into Date objects.
       newArticles.map((article) => {
         article.createdAt = new Date(article.createdAt);
       });
-      setInfiniteArticles([...infiniteArticles, ...newArticles]);
+      articles.concat(newArticles);
+      setInfiniteArticles(articles);
     },
     [infiniteArticles, postNum]
   );
@@ -64,9 +75,9 @@ const Home = ({
             className="flex flex-wrap justify-center"
             loader={<></>} //TODO: Create a component for a skeleton animation of PostCard
           >
-            {infiniteArticles.map((article) => (
-              <PostCard key={article.id} article={article} />
-            ))}
+            <For each={infiniteArticles}>
+              {(article) => <PostCard key={article.id} article={article} />}
+            </For>
           </InfiniteScroll>
         </div>
       </div>

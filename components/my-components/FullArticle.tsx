@@ -9,8 +9,8 @@ import { useTransition, useEffect, useRef, useState } from "react";
 import { editArticle } from "@/app/actions";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { UilArrowLeft } from "@iconscout/react-unicons";
 import { motion } from "framer-motion";
+import ArrowLeft from "../ui/arrow-left";
 
 const getRandomTailwindTextColor = () => {
   const colors = [
@@ -173,7 +173,7 @@ const FullArticle = ({ article }: { article: ArticleType }) => {
                       className="w-fit bg-transparent hover:bg-black/30 border-2 border-transparent hover:border-white/20"
                     >
                       <Link href="/home">
-                        <UilArrowLeft className="text-[#AC8A89]" />
+                        <ArrowLeft />
                       </Link>
                     </Button>
                   </div>
