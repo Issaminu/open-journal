@@ -12,6 +12,13 @@ const nextConfig = {
       "i.pravatar.cc",
     ],
   },
+  experimental: {
+    optimizePackageImports: [
+      "@mantine/core",
+      "@mantine/hooks",
+      "@mantine/tiptap",
+    ],
+  },
   async redirects() {
     return [
       {
